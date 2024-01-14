@@ -1,3 +1,10 @@
+---
+marp: true
+theme: dae
+title: Scenegraph & Dirty flag
+author: ava
+---
+
 # Programming 4 slides
 
 This repo contains most of the slides used in the course [Programming 4](https://www.digitalartsandentertainment.be/page/51/Programming+4) for the bachelor program [Digital Arts and Entertainment](https://www.digitalartsandentertainment.be) at [Hogeschool West Vlaanderen](https://www.howest.be).
