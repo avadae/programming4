@@ -500,7 +500,7 @@ class NPC : public Base
 
 </div><div>
 
-![center width:700](image-17.png)
+![center width:700 drop-shadow:0,0,10px,#000](image-17.png)
 
 </div><div>
 
