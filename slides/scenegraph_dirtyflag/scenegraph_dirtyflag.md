@@ -1,6 +1,8 @@
 ---
 marp: true
 theme: dae
+title: Scenegraph & Dirty flag
+author: ava
 ---
 <!-- _class: title-slide-v2023 -->
 
