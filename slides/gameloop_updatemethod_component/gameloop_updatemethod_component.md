@@ -1,6 +1,8 @@
 ---
 marp: true
 theme: dae
+title: Gameloop, Update method & Component
+author: ava
 ---
 <!-- _class: title-slide-v2023 -->
 

@@ -1,0 +1,222 @@
+/*!
+ * @theme dae
+ * @author ava
+ * @auto-scaling fittingHeader,math
+ * @size 16:9 1920px 1080px
+ */
+
+@import 'default';
+
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300&display=swap');
+
+:root {
+  --text-color: #222222;
+  --title-color: #ff1234;
+  --background-color: #ebebeb;
+  --title-slide-text-color : #ebebeb;
+}
+
+section {
+  color: var(--text-color);
+  background-color: var(--background-color);
+  width: 1920px;
+  height: 1080px;
+  padding-top: 175px;
+  justify-content: start;
+  font-size: 35px;
+}
+
+section header {
+  font-family: 'Chakra Petch', sans-serif;
+  color: var(--text-color);
+  background: linear-gradient(110deg, var(--title-color), 20px,#0000 0); 
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  font-size:25pt;
+  padding-left: 30px;
+}
+
+section::after {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+  color: var(--title-color);
+  background: linear-gradient(-70deg, var(--text-color), 70px,#0000 0); 
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  padding-bottom: 18px;
+  padding-right: 15px;
+  padding-top: 150px;
+  padding-left: 100px;
+}
+
+section footer {
+  color: var(--title-color);
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  padding:10px;
+  padding-left:2%;
+}
+
+h1 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: normal;
+  color:var(--title-color) ;
+  position: absolute;
+  top: 50px;
+  left: 35px;
+  width: 95%;
+  font-size: 50pt;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* to add a center option to images */
+img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+
+img {
+  background-color: var(--main-color);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+section.title-slide {
+  background-image: url('https://raw.githubusercontent.com/avadae/marp-themes/main/img/wallpaper01.jpg');  
+  background-color: var(--main-color);
+  color: var(--title-slide-text-color);
+  padding: 0px;
+  display: block;
+  grid-template: initial;
+}
+
+section.title-slide h1 {
+  color: var(--title-slide-text-color);
+  font-size: 60px;
+  position: absolute;
+  top: 900px;
+  left: 0px;
+  margin-left: 360px;
+  width: 1200px;
+  text-align: center;
+  background-color: rgba(10,10,10,0.6);
+}
+
+section.title-slide h2 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: normal;
+  color: var(--main-color);
+  background: linear-gradient(110deg, var(--title-color), 280px,#0000 0); 
+  font-size: 60px;
+  position: absolute;
+  top: 20px;
+  left: 0px;
+  width: 1200px;
+  padding: 10px;
+  padding-left:20px;
+}
+
+section.title-slide-v2023 {
+  background-image: url('https://raw.githubusercontent.com/avadae/marp-themes/main/img/wallpaper02.jpg');  
+  background-color: var(--main-color);
+  color: var(--title-slide-text-color);
+  padding: 0px;
+  display: block;
+  grid-template: initial;
+}
+
+section.title-slide-v2023 h1 {
+  color: var(--title-slide-text-color);
+  font-size: 60px;
+  position: absolute;
+  top: 800px;
+  left:0px;
+  margin-left:360px;
+  width: 1200px;
+  text-align: center;
+  background-color: rgba(10,10,10,0.6);
+}
+
+section.title-slide-v2023 h2 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: normal;
+  color: var(--main-color);
+  background: linear-gradient(110deg, var(--title-color), 280px,#0000 0); 
+  font-size: 60px;
+  position: absolute;
+  top: 20px;
+  left: 0px;
+  width: 1200px;
+  padding: 10px;
+  padding-left:20px;
+}
+
+section.title-slide-v2017 {
+  background-image: url('https://raw.githubusercontent.com/avadae/marp-themes/main/img/wallpaper00.jpg');  
+  background-color: var(--main-color);
+  color: var(--title-slide-text-color);
+  padding: 0px;
+  display: block;
+  grid-template: initial;
+}
+
+section.title-slide-v2017 h1 {
+  color: var(--title-slide-text-color);
+  font-size: 60px;
+  position: absolute;
+  top: 800px;
+  left:0px;
+  margin-left:360px;
+  width: 1200px;
+  text-align: center;
+  background-color: rgba(10,10,10,0.6);
+}
+
+section.title-slide-v2017 h2 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: normal;
+  color: var(--main-color);
+  background: linear-gradient(110deg, var(--title-color), 280px,#0000 0); 
+  font-size: 60px;
+  position: absolute;
+  top: 20px;
+  left: 0px;
+  width: 1200px;
+  padding: 10px;
+  padding-left:20px;
+}
+
+section strong{
+  color: var(--title-color);
+}
+section h1 strong{
+  color: var(--title-color);
+  font-weight: 800;
+}
+section h6 strong{
+  color: var(--title-color);
+}
+section h2 strong{
+  color: var(--title-color);
+}
+section h3 strong{
+  color: var(--title-color);
+}
+section h4 strong{
+  color: var(--title-color);
+}
+section h5 strong{
+  color: var(--title-color);
+}
