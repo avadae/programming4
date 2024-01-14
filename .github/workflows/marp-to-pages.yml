@@ -27,31 +27,25 @@ jobs:
       - name: Copy images
         run: rsync -r --include='*/' --include='*.jpg' --include='*.png' --exclude='*' slides/ build/slides/
 
-      - name: Check if docs folder exists
-        id: slides-folder-exists
-        run: bash -c "[[ -d slides ]] ; echo \"has_slides=\$?\" >> \"$GITHUB_OUTPUT\""
-
-      - name: Marp Build (slides folder, if exists)
-        if: steps.slides-folder-exists.outputs.has_slides == '0'
-        uses: docker://marpteam/marp-cli:v3.0.2
+      - name: Marp Build
+        uses: docker://marpteam/marp-cli:v3.4.0
         with:
-          args: -I slides/ -o build/slides/**/index.html
+          args: -c package.json
         env:
           MARP_USER: root:root
 
-      - name: Deploy preview
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: rossjrw/pr-preview-action@v1
+      - name: Marp Build to pdf
+        uses: docker://marpteam/marp-cli:v3.4.0
         with:
-          source-dir: ./build/
-          preview-branch: gh-pages
-          umbrella-dir: pr-preview
+          args: -c package.json -o build/pdf
+        env:
+          MARP_USER: root:root
 
       - name: Deploy production
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: ./build/
+          folder: ./build/slides/
           clean-exclude: pr-preview/
 
