@@ -187,7 +187,8 @@ private:
 }
 ```
 - This is exactly what events are in C#
-- And UnityEvent in Unity
+- This is exactly what UnityEvents are in Unity
+- This is exactly what multicast delegates are in Unreal
 - Java has a similar system and even an Observer and Observable class.
 
 ---
@@ -213,6 +214,38 @@ This may suffer from the **lapsed listener problem**.
 In C++, where we have no GC we can make use of shared and weak pointers to avoid this issue, or use the destructor to unsubscribe.
 
 ---
+
+# Unreal
+
+In Unreal you'd add an event (which is a multicast delegate) in your header file:
+
+```cpp
+public:
+  DECLARE_MULTICAST_DELEGATE(FMyEvent)
+  FMyEvent& OnSwitched() { return SwitchedEvent; }
+private:
+  FMyEvent SwitchedEvent;
+```
+
+Which you then can broadcast
+
+```cpp
+void AMyActor::MyFunction()
+{
+    SwitchedEvent.Broadcast();
+}
+```
+
+And subscribe to
+
+```cpp
+Actor->OnSwitched().AddUFunction(this, "ToggleDoor");
+```
+
+<sub>https://docs.unrealengine.com/5.3/en-US/multicast-delegates-in-unreal-engine/</sub>
+
+---
+
 # Implementations
 
 It’s often not interesting or possible to know the source of an event.

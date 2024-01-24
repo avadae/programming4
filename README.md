@@ -14,7 +14,7 @@ The slides are not organised in weeks, since the order in which we discuss the p
 - [Scenegraph and Dirty flag](https://avadae.github.io/programming4/scenegraph_dirtyflag/scenegraph_dirtyflag.html)
 - [Command and Pimpl](https://avadae.github.io/programming4/command_pimpl/command_pimpl.html)
 - [Observer and Event queue](https://avadae.github.io/programming4/observer_eventqueue/observer_eventqueue.html)
-- [State and Double Buffer](https://avadae.github.io/programming4/state_doublebuffer/state_doublebuffer.html)
+- [State and Double buffer](https://avadae.github.io/programming4/state_doublebuffer/state_doublebuffer.html)
 - [Byte code](https://avadae.github.io/programming4/bytecode/bytecode.html)
 - [Singleton and Service locators](https://avadae.github.io/programming4/sound_services/sound_services.html)
 
