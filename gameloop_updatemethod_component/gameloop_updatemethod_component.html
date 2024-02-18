@@ -50,6 +50,9 @@
 <p>More recent and applied to game programming</p>
 </li>
 <li>
+<p>Notice &quot;programming&quot; patterns</p>
+</li>
+<li>
 <p>Written by Robert Nystrom</p>
 <ul>
 <li>Software engineer @ Google</li>
@@ -89,7 +92,6 @@
     HACCEL hAccelTable = <span class="hljs-built_in">LoadAccelerators</span>(hInstance, <span class="hljs-built_in">MAKEINTRESOURCE</span>(IDC_TESTTEMP));
     MSG msg;
 
-    <span class="hljs-comment">// Main message loop:</span>
     <span class="hljs-keyword">while</span> (<span class="hljs-built_in">GetMessage</span>(&amp;msg, <span class="hljs-literal">nullptr</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)) {
         <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">TranslateAccelerator</span>(msg.hwnd, hAccelTable, &amp;msg)) {
             <span class="hljs-built_in">TranslateMessage</span>(&amp;msg);
@@ -152,6 +154,7 @@
   this_thread::<span class="hljs-built_in">sleep_for</span>(sleep_time);
 }
 </code></pre>
+<p>What else goes wrong here?</p>
 <footer>Programming 4</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1920 1080"><foreignObject width="1920" height="1080"><section id="10" data-footer="Programming 4" data-header="Game programming patterns - Game loop" data-paginate="true" data-theme="dae" lang="en-US" data-marpit-pagination="10" style="--footer:Programming 4;--header:Game programming patterns - Game loop;--paginate:true;--theme:dae;" data-marpit-pagination-total="29">
@@ -336,17 +339,22 @@
 <p>Do we pass the deltaTime to the Update method? (as we have seen in the game loop pattern)</p>
 <pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-type">float</span> delta_time)</span>
 </span>{
-  <span class="hljs-keyword">if</span>(is_walking_left) 
-  {
+  <span class="hljs-keyword">if</span>(is_walking_left) {
     i--;
     <span class="hljs-keyword">if</span>(i == <span class="hljs-number">0</span>) is_walking_left = <span class="hljs-literal">false</span>
   }
-  <span class="hljs-keyword">else</span> 
-  {
+  <span class="hljs-keyword">else</span> {
     i++;
     <span class="hljs-keyword">if</span>(i == <span class="hljs-number">100</span>) is_walking_left = <span class="hljs-literal">true</span>;
   }
   skeleton.<span class="hljs-built_in">set_x</span>(i * delta_time);
+}
+</code></pre>
+<p>This is the approach chosen by Unreal</p>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">SomeActor::Tick</span><span class="hljs-params">(<span class="hljs-type">float</span> DeltaTime)</span>
+</span>{
+  Super::<span class="hljs-built_in">Tick</span>(DeltaTime);
+  <span class="hljs-comment">// code</span>
 }
 </code></pre>
 <footer>Programming 4</footer>
