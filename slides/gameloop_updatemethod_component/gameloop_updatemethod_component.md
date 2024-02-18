@@ -35,6 +35,7 @@ author: ava
 ![bg right:50% width:70% drop-shadow:0,0,10px,#000](gameprogrammingpatterns_cover.jpg)
 
 - More recent and applied to game programming
+- Notice "programming" patterns
 - Written by Robert Nystrom
   - Software engineer @ Google
   - Lead software engineer @ EA
@@ -68,7 +69,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TESTTEMP));
     MSG msg;
 
-    // Main message loop:
     while (GetMessage(&msg, nullptr, 0, 0)) {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
             TranslateMessage(&msg);
@@ -151,6 +151,8 @@ while (do_continue)
   this_thread::sleep_for(sleep_time);
 }
 ```
+
+What else goes wrong here?
 
 <!-- 
 But often the game can’t keep that pace and you’ll run slower than 60 fps, making your game appearing slower.
@@ -375,17 +377,25 @@ Do we pass the deltaTime to the Update method? (as we have seen in the game loop
 ```cpp
 void update(float delta_time)
 {
-  if(is_walking_left) 
-  {
+  if(is_walking_left) {
     i--;
     if(i == 0) is_walking_left = false
   }
-  else 
-  {
+  else {
     i++;
     if(i == 100) is_walking_left = true;
   }
   skeleton.set_x(i * delta_time);
+}
+```
+
+This is the approach chosen by Unreal
+
+```cpp
+void SomeActor::Tick(float DeltaTime)
+{
+  Super::Tick(DeltaTime);
+  // code
 }
 ```
 
