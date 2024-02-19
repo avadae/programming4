@@ -233,8 +233,16 @@ fixed_time_step -> too long, gameplay will be choppy. Too short, there won’t b
 - That ```fixed_time_step```, how much should it be?
 - It should be a config setting, every game has different requirements
 
+
+<div class="columns"><div>
+
 ![center width:70% drop-shadow:0,0,10px,#000](time_unity.jpg)
-![bg right:50% width:70% drop-shadow:0,0,10px,#000](time_unreal.jpg)
+
+</div><div>
+
+![center width:70% drop-shadow:0,0,10px,#000](time_unreal.jpg)
+
+</div></div>
 
 - Important: the fixed update is only relevant for **physics and networking**
 
