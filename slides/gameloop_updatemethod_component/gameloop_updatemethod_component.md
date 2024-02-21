@@ -165,7 +165,7 @@ But often the game can’t keep that pace and you’ll run slower than 60 fps, m
 ```cpp
 bool do_continue = true;
 auto last_time = high_resolution_clock::now();
-while (doContinue)
+while (do_continue)
 {
   const auto current_time = high_resolution_clock::now();
   const float delta_time = duration<float>(current_time – last_time).count();
@@ -199,12 +199,12 @@ Rounding errors (and certainly small values) are VERY bad for the physics engine
 bool do_continue = true;
 auto last_time = high_resolution_clock::now();
 float lag = 0.0f;
-while (doContinue)
+while (do_continue)
 {
   const auto current_time = high_resolution_clock::now();
   const float delta_time = duration<float>(current_time – last_time).count();
   last_time = current_time;
-  lag += deltaTime;
+  lag += delta_time;
   
   do_continue = process_input();
   while(lag >= fixed_time_step)
