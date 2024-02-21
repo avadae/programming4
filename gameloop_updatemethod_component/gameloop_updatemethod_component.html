@@ -162,7 +162,7 @@
 <h1 id="adapt-to-the-actual-time">Adapt to the actual time</h1>
 <pre><code class="language-cpp"><span class="hljs-type">bool</span> do_continue = <span class="hljs-literal">true</span>;
 <span class="hljs-keyword">auto</span> last_time = high_resolution_clock::<span class="hljs-built_in">now</span>();
-<span class="hljs-keyword">while</span> (doContinue)
+<span class="hljs-keyword">while</span> (do_continue)
 {
   <span class="hljs-type">const</span> <span class="hljs-keyword">auto</span> current_time = high_resolution_clock::<span class="hljs-built_in">now</span>();
   <span class="hljs-type">const</span> <span class="hljs-type">float</span> delta_time = <span class="hljs-built_in">duration</span>&lt;<span class="hljs-type">float</span>&gt;(current_time – last_time).<span class="hljs-built_in">count</span>();
@@ -185,12 +185,12 @@
 <pre><code class="language-cpp"><span class="hljs-type">bool</span> do_continue = <span class="hljs-literal">true</span>;
 <span class="hljs-keyword">auto</span> last_time = high_resolution_clock::<span class="hljs-built_in">now</span>();
 <span class="hljs-type">float</span> lag = <span class="hljs-number">0.0f</span>;
-<span class="hljs-keyword">while</span> (doContinue)
+<span class="hljs-keyword">while</span> (do_continue)
 {
   <span class="hljs-type">const</span> <span class="hljs-keyword">auto</span> current_time = high_resolution_clock::<span class="hljs-built_in">now</span>();
   <span class="hljs-type">const</span> <span class="hljs-type">float</span> delta_time = <span class="hljs-built_in">duration</span>&lt;<span class="hljs-type">float</span>&gt;(current_time – last_time).<span class="hljs-built_in">count</span>();
   last_time = current_time;
-  lag += deltaTime;
+  lag += delta_time;
   
   do_continue = <span class="hljs-built_in">process_input</span>();
   <span class="hljs-keyword">while</span>(lag &gt;= fixed_time_step)
