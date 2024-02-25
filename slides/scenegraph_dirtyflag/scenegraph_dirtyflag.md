@@ -179,6 +179,16 @@ void AddChild(GameObject* child) { m_children.emplace_back(child); }
 <div class="columns" style="font-size: 32px;"><div>
 
 SetParent has to do **five** things:
+
+</div></div>
+
+---
+
+# How then?
+
+<div class="columns" style="font-size: 32px;"><div>
+
+SetParent has to do **five** things:
 - Check if the new parent is valid (not itself or one of its children)
 - Remove itself as a child from the previous parent (if any).
 - Set the given parent on itself.
@@ -201,11 +211,54 @@ SetParent has to do **five** things:
 - Update position, rotation and scale
 
 AddChild has to do **five** things
+
+</div></div>
+
+---
+
+# How then?
+
+<div class="columns" style="font-size: 32px;"><div>
+
+SetParent has to do **five** things:
+- Check if the new parent is valid (not itself or one of its children)
+- Remove itself from the previous parent (if any).
+- Set the given parent on itself.
+- Add itself as a child to the given parent.
+- Update position, rotation and scale
+
+AddChild has to do **five** things
 - Check if the new child is valid (not null and not one of its parents)
 - Remove the given child from the child's previous parent
 - Set itself as parent of the child
 - Add the child to its children list.
 - Update position, rotation and scale
+
+</div></div>
+
+---
+
+# How then?
+
+<div class="columns" style="font-size: 32px;"><div >
+
+SetParent has to do **five** things:
+- Check if the new parent is valid (not itself or one of its children)
+- Remove itself from the previous parent (if any).
+- Set the given parent on itself.
+- Add itself as a child to the given parent.
+- Update position, rotation and scale
+
+AddChild has to do **five** things
+- Check if the new child is valid (not null and not one of its parents)
+- Remove the given child from the child's previous parent
+- Set itself as parent of the child
+- Add the child to its children list.
+- Update position, rotation and scale
+
+</div><div>
+
+RemoveChild has to do **four** things
 
 </div></div>
 
@@ -270,6 +323,41 @@ RemoveChild has to do **four** things
 
 Can SetParent use AddChild to do its job? 
 Can AddChild use SetParent to do its job?
+
+</div></div>
+
+
+---
+
+# How then?
+
+<div class="columns" style="font-size: 30px;"><div >
+
+SetParent has to do **five** things:
+- Check if the new parent is valid (not itself or one of its children)
+- Remove itself from the previous parent (```RemoveChild```?).
+- Set the given parent on itself.
+- Add itself as a child to the given parent (```AddChild```?).
+- Update position, rotation and scale
+
+AddChild has to do **five** things
+- Check if the new child is valid (not null and not one of its parents)
+- Remove the given child from the child's previous parent (```RemoveChild```?)
+- Set itself as parent of the child (```SetParent```?)
+- Add the child to its children list.
+- Update position, rotation and scale
+
+</div><div>
+
+RemoveChild has to do **four** things
+- Check if the child is valid (not null and one of its children)
+- Remove the given child from the children list
+- Remove itself as a parent of the child. (```SetParent```?)
+- Update position, rotation and scale
+
+
+Can SetParent use AddChild to do its job? 
+Can AddChild use SetParent to do its job?
 No – stack overflow would happen
 
 
@@ -294,8 +382,25 @@ When changing the parent, does the child stay at the same place in the world, or
 When changing the parent, does the child stay at the same place in the world, or not? 
 It depends on the use case, you'll need to provide some options for your users.
 
-![center width:100% drop-shadow:0,0,10px,#000](setparent_unreal.png)
-![center width:100% drop-shadow:0,0,10px,#000](setparent_unity.png)
+![center width:900 drop-shadow:0,0,10px,#000](setparent_unreal.png)
+![center width:900 drop-shadow:0,0,10px,#000](setparent_unity.png)
+
+---
+
+# Local vs World space
+
+An objects size, position and rotation in the game world
+- Can be expressed in global terms (world space)
+- Can be expressed in local terms, relative to the parent (local space)
+
+If no parent, local space == world space
+
+Adding a game object to a parent means either:
+- The position in local space changes
+- The position in global space changes
+
+When the position of a parent changes, the position of the children change too (in world space).
+- When do we calculate the world space transform? Immediately when moving the parent?
 
 ---
 
