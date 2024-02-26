@@ -159,7 +159,7 @@ Is this correct?
 ```cpp
 void SetParent(GameObject* parent) { m_parent = parent; }
 
-void GetParent() const { return m_parent; }
+GameObject* GetParent() const { return m_parent; }
 
 size_t GetChildCount() const { return m_children.size(); }
 
@@ -296,7 +296,7 @@ RemoveChild has to do **four** things
 
 # How then?
 
-<div class="columns" style="font-size: 30px;"><div >
+<div class="columns" style="font-size: 32px;"><div >
 
 SetParent has to do **five** things:
 - Check if the new parent is valid (not itself or one of its children)
@@ -331,7 +331,7 @@ Can AddChild use SetParent to do its job?
 
 # How then?
 
-<div class="columns" style="font-size: 30px;"><div >
+<div class="columns" style="font-size: 32px;"><div >
 
 SetParent has to do **five** things:
 - Check if the new parent is valid (not itself or one of its children)
@@ -475,9 +475,10 @@ void SetParent(GameObject* parent, bool keepWorldPosition)
     if (keepWorldPosition)
       SetLocalPosition(GetLocalPosition() - parent->GetWorldPosition());
     SetPositionDirty()
-    if(m_parent) m_parent->RemoveChild(this);
-    m_parent = parent;
-    if(m_parent) m_parent->AddChild(this)
+  }
+  if(m_parent) m_parent->RemoveChild(this);
+  m_parent = parent;
+  if(m_parent) m_parent->AddChild(this)
 }
 
 void SetLocalPosition(const glm::vec3& pos)
@@ -492,7 +493,7 @@ void SetLocalPosition(const glm::vec3& pos)
 # Dirty flag
 
 ```cpp
-const glm::vec3& GetWorldPosition() const
+const glm::vec3& GetWorldPosition()
 {
   if (m_positionIsDirty)
     UpdateWorldPosition();
