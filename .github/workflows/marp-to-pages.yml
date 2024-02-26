@@ -19,7 +19,7 @@ jobs:
     steps:
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Ensure build dir exists
         run: mkdir -p build
@@ -33,14 +33,7 @@ jobs:
           args: -c package.json
         env:
           MARP_USER: root:root
-
-      - name: Marp Build to pdf
-        uses: docker://marpteam/marp-cli:v3.4.0
-        with:
-          args: -c package.json --pdf
-        env:
-          MARP_USER: root:root
-
+          
       - name: Deploy production
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4
