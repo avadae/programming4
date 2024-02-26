@@ -144,7 +144,7 @@
 <p>Is this correct?</p>
 <pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">SetParent</span><span class="hljs-params">(GameObject* parent)</span> </span>{ m_parent = parent; }
 
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">GetParent</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ <span class="hljs-keyword">return</span> m_parent; }
+<span class="hljs-function">GameObject* <span class="hljs-title">GetParent</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ <span class="hljs-keyword">return</span> m_parent; }
 
 <span class="hljs-function"><span class="hljs-type">size_t</span> <span class="hljs-title">GetChildCount</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ <span class="hljs-keyword">return</span> m_children.<span class="hljs-built_in">size</span>(); }
 
@@ -279,7 +279,7 @@
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1920 1080"><foreignObject width="1920" height="1080"><section id="15" data-footer="Programming 4" data-header="Scenegraph" data-paginate="true" data-theme="dae" lang="en-US" data-marpit-pagination="15" style="--footer:Programming 4;--header:Scenegraph;--paginate:true;--theme:dae;" data-marpit-pagination-total="27">
 <header>Scenegraph</header>
 <h1 id="how-then-6">How then?</h1>
-<div class="columns" style="font-size: 30px;"><div >
+<div class="columns" style="font-size: 32px;"><div >
 <p>SetParent has to do <strong>five</strong> things:</p>
 <ul>
 <li>Check if the new parent is valid (not itself or one of its children)</li>
@@ -312,7 +312,7 @@ Can AddChild use SetParent to do its job?</p>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1920 1080"><foreignObject width="1920" height="1080"><section id="16" data-footer="Programming 4" data-header="Scenegraph" data-paginate="true" data-theme="dae" lang="en-US" data-marpit-pagination="16" style="--footer:Programming 4;--header:Scenegraph;--paginate:true;--theme:dae;" data-marpit-pagination-total="27">
 <header>Scenegraph</header>
 <h1 id="how-then-7">How then?</h1>
-<div class="columns" style="font-size: 30px;"><div >
+<div class="columns" style="font-size: 32px;"><div >
 <p>SetParent has to do <strong>five</strong> things:</p>
 <ul>
 <li>Check if the new parent is valid (not itself or one of its children)</li>
@@ -449,9 +449,10 @@ It depends on the use case, you'll need to provide some options for your users.<
     <span class="hljs-keyword">if</span> (keepWorldPosition)
       <span class="hljs-built_in">SetLocalPosition</span>(<span class="hljs-built_in">GetLocalPosition</span>() - parent-&gt;<span class="hljs-built_in">GetWorldPosition</span>());
     <span class="hljs-built_in">SetPositionDirty</span>()
-    <span class="hljs-keyword">if</span>(m_parent) m_parent-&gt;<span class="hljs-built_in">RemoveChild</span>(<span class="hljs-keyword">this</span>);
-    m_parent = parent;
-    <span class="hljs-keyword">if</span>(m_parent) m_parent-&gt;<span class="hljs-built_in">AddChild</span>(<span class="hljs-keyword">this</span>)
+  }
+  <span class="hljs-keyword">if</span>(m_parent) m_parent-&gt;<span class="hljs-built_in">RemoveChild</span>(<span class="hljs-keyword">this</span>);
+  m_parent = parent;
+  <span class="hljs-keyword">if</span>(m_parent) m_parent-&gt;<span class="hljs-built_in">AddChild</span>(<span class="hljs-keyword">this</span>)
 }
 
 <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">SetLocalPosition</span><span class="hljs-params">(<span class="hljs-type">const</span> glm::vec3&amp; pos)</span>
@@ -465,7 +466,7 @@ It depends on the use case, you'll need to provide some options for your users.<
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1920 1080"><foreignObject width="1920" height="1080"><section id="25" data-footer="Programming 4" data-header="Game programming patterns - Dirty flag" data-paginate="true" data-theme="dae" lang="en-US" data-marpit-pagination="25" style="--footer:Programming 4;--header:Game programming patterns - Dirty flag;--paginate:true;--theme:dae;" data-marpit-pagination-total="27">
 <header>Game programming patterns - Dirty flag</header>
 <h1 id="dirty-flag-3">Dirty flag</h1>
-<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">const</span> glm::vec3&amp; <span class="hljs-title">GetWorldPosition</span><span class="hljs-params">()</span> <span class="hljs-type">const</span>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">const</span> glm::vec3&amp; <span class="hljs-title">GetWorldPosition</span><span class="hljs-params">()</span>
 </span>{
   <span class="hljs-keyword">if</span> (m_positionIsDirty)
     <span class="hljs-built_in">UpdateWorldPosition</span>();
