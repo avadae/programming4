@@ -473,7 +473,7 @@ void SetParent(GameObject* parent, bool keepWorldPosition)
   else
   {
     if (keepWorldPosition)
-      SetLocalPosition(GetLocalPosition() - parent->GetWorldPosition());
+      SetLocalPosition(GetWorldPosition() - parent->GetWorldPosition());
     SetPositionDirty()
     if(m_parent) m_parent->RemoveChild(this);
     m_parent = parent;
