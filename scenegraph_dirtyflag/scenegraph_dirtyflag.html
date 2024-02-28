@@ -447,7 +447,7 @@ It depends on the use case, you'll need to provide some options for your users.<
   <span class="hljs-keyword">else</span>
   {
     <span class="hljs-keyword">if</span> (keepWorldPosition)
-      <span class="hljs-built_in">SetLocalPosition</span>(<span class="hljs-built_in">GetLocalPosition</span>() - parent-&gt;<span class="hljs-built_in">GetWorldPosition</span>());
+      <span class="hljs-built_in">SetLocalPosition</span>(<span class="hljs-built_in">GetWorldPosition</span>() - parent-&gt;<span class="hljs-built_in">GetWorldPosition</span>());
     <span class="hljs-built_in">SetPositionDirty</span>()
   }
   <span class="hljs-keyword">if</span>(m_parent) m_parent-&gt;<span class="hljs-built_in">RemoveChild</span>(<span class="hljs-keyword">this</span>);
