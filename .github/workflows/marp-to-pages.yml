@@ -33,6 +33,15 @@ jobs:
           args: -c package.json --allow-local-files
         env:
           MARP_USER: root:root
+          PUPPETEER_TIMEOUT: 0
+
+      - name: Marp Build to pdf
+        uses: docker://marpteam/marp-cli:v3.4.0
+        with:
+          args: -c package.json --pdf --allow-local-files
+        env:
+          MARP_USER: root:root
+          PUPPETEER_TIMEOUT: 0
 
       - name: Deploy production
         if: ${{ github.event_name == 'push' }}
