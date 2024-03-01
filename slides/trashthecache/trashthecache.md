@@ -347,6 +347,8 @@ cd = newly allocated memory
 
 ---
 
+# Object layout in memory
+
 ```cpp
 struct Data
 {
@@ -368,7 +370,10 @@ dd = unused free memory
 cd = newly allocated memory
 --->
 
+
 ---
+
+# Object layout in memory
 
 ```cpp
 struct Data
@@ -419,7 +424,7 @@ Why? We would have to shift and OR the bits if not aligned:
 
 <div class="columns"><div>
 
-The alignment of our struct?
+The alignment of our struct (x86)?
 - 4-byte – the largest alignment of its members.
 
 Classes that inherit from another class
@@ -442,6 +447,20 @@ struct Data
 ```
 
 </div></div>
+
+---
+
+# Memory alignment
+
+Feature since Visual Studio 17.9:
+
+![w:400 center drop-shadow:0,0,10px,#000](image-18.png)
+
+8 Byte alignment?
+
+![w:1000 center drop-shadow:0,0,10px,#000](image-19.png)
+
+![w:1000 center drop-shadow:0,0,10px,#000](image-20.png)
 
 ---
 # Memory alignment
@@ -846,7 +865,7 @@ Solution: we split the data into hot/cold. Only data in the hot path should resi
 
 <div class="columns"><div>
 
-We split the data according whether it's used in the **hot or cold path**.
+We split the data according to whether it's used in the **hot or cold path**.
 
 - *Hot path*: data we need every frame / code we run every frame
   - Most often the code called in the Update method
@@ -965,7 +984,7 @@ But compare it with the GameObject3D and you see the massive gain, until k = 16 
 
 # User interface programming
 
-There mainly two types of UI
+There are mainly two types of UI
 
 <div class="columns"><div>
 
