@@ -316,26 +316,26 @@ Can AddChild use SetParent to do its job?</p>
 <p>SetParent has to do <strong>five</strong> things:</p>
 <ul>
 <li>Check if the new parent is valid (not itself or one of its children)</li>
+<li>Update position, rotation and scale</li>
 <li>Remove itself from the previous parent (<code>RemoveChild</code>?).</li>
 <li>Set the given parent on itself.</li>
 <li>Add itself as a child to the given parent (<code>AddChild</code>?).</li>
-<li>Update position, rotation and scale</li>
 </ul>
 <p>AddChild has to do <strong>five</strong> things</p>
 <ul>
 <li>Check if the new child is valid (not null and not one of its parents)</li>
+<li>Update position, rotation and scale</li>
 <li>Remove the given child from the child's previous parent (<code>RemoveChild</code>?)</li>
 <li>Set itself as parent of the child (<code>SetParent</code>?)</li>
 <li>Add the child to its children list.</li>
-<li>Update position, rotation and scale</li>
 </ul>
 </div><div>
 <p>RemoveChild has to do <strong>four</strong> things</p>
 <ul>
 <li>Check if the child is valid (not null and one of its children)</li>
+<li>Update position, rotation and scale</li>
 <li>Remove the given child from the children list</li>
 <li>Remove itself as a parent of the child. (<code>SetParent</code>?)</li>
-<li>Update position, rotation and scale</li>
 </ul>
 <p>Can SetParent use AddChild to do its job?<br />
 Can AddChild use SetParent to do its job?<br />
