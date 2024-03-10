@@ -59,9 +59,8 @@ One way to process input is via "polling"
 - Periodically read the current state of the device
   - Periodically: once per frame in our example
 - Often game pads, joysticks
-- On windows, this is what the Xinput API provides
+- On windows, this is what the XInput API provides
   - ```XInputGetState()```
-We’ll use this in the exercises and our engine
 
 ```cpp
 XINPUT_STATE state;
@@ -493,17 +492,35 @@ Mapping the input to the commands is up to you.
 
 ---
 
-# Command
+# Actions in Unity
 
-Some examples
+![center w:1200 drop-shadow:0,0,10px,#000](image-5.png)
 
-![bg width: 90%](image-3.png)
+---
+
+# Actions in Unreal
+
+![center w:1200 drop-shadow:0,0,10px,#000](image-4.png)
+
+---
+
+# Actions
+
+Actions is the mapping of some input to an ID. This id then gets mapped to a certain command or function.
+
+```cpp
+if (auto EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent))
+{
+  EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, 
+    &AMyPlayerController::OnMove);
+}
+```
 
 ---
 
 # Command
 
-Editors often (always?) work with stacked commands, to enable Undo/Redo functionality.
+Editors (not games) often (always?) work with stacked commands, to enable Undo/Redo functionality.
 
 ```cpp
 class EditorCommand : public Command
