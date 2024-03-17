@@ -35,8 +35,11 @@ void GameActor::Die()
 }
 ```
 
-<!-- Not very portable, right? Ask for alternatives. Let’s see what they come up with.
-Challenges: What about 100 kills. What about 20 kills with a flamethrower, etc... -->
+<!-- 
+Achievement from Team Fortress 2
+Not very portable, right? Ask for alternatives. Let’s see what they come up with.
+Challenges: What about 100 kills. What about 20 kills with a flamethrower, etc... 
+-->
 
 ---
 # Problem statement
@@ -49,7 +52,10 @@ Or, even worse:
 
 Goal is again: no tight coupling. 
 
-<!-- You need to keep track of the height when you jumped, you compare it with the height when you land, you cannot die of it + it needs to be on a hard surface... -->
+<!-- 
+Achievement from world of warcraft
+You need to keep track of the height when you jumped, you compare it with the height when you land, you cannot die of it + it needs to be on a hard surface... 
+-->
 
 ---
 # Remember: no coupling
@@ -87,8 +93,10 @@ public:
 }
 ```
 
-<!-- This decouples code. The Physics engine can issue an event that an Entity fell, but whether or not there should be an achievement for that, or lives should be subtracted, or a level should be restarted is totally not up to the Physics engine.
-Note: the observer interface does not have to be written like this, the Notify method can have whatever parameters you want and you can have multiple Notify methods too. Often you have an event and eventargs. -->
+<!-- 
+This decouples code. The Physics engine can issue an event that an Entity fell, but whether or not there should be an achievement for that, or lives should be subtracted, or a level should be restarted is totally not up to the Physics engine.
+Note: the observer interface does not have to be written like this, the Notify method can have whatever parameters you want and you can have multiple Notify methods too. Often you have an event and eventargs. 
+-->
 
 ---
 # Observer
@@ -312,6 +320,23 @@ void PlaySound(SoundId id, int volume)
 }
 ```
 This has 3 issues:
+
+---
+# Usage example
+
+When can we use this? For example in our ``GameActor::Die`` function we needed to play a sound. That function could call this function:
+
+```cpp
+void PlaySound(SoundId id, int volume)
+{
+  auto sound = LoadSound(id);
+  int channel = FindOpenChannel();
+  if(channel == -1) return;
+  StartPlayingSound(sound, channel, volume);
+}
+```
+This has 3 issues:
+
 1. The call is blocking/synchronous and can take a while
 2. The call is not thread safe
 3. The call is executed by the wrong thread.
@@ -397,7 +422,8 @@ void dae::Ghost::HandleEvent(const Event* pEvent) {
     - Observer pattern
 - What about ownership of the objects in the queue?
 
-<!-- 2nd bullet: By the time an event gets processed, it might not be necessary anymore, how do you handle that?
+<!-- 
+2nd bullet: By the time an event gets processed, it might not be necessary anymore, how do you handle that?
 3rd bullet: If an eventhandler invokes an event that triggers the same handler you’re stuck. In a single threaded environment that’s fine, you’ll get a stackoverflow, but in a multithreaded context you’ll be keeping your CPU’s busy.
 5th bullet: Pass ownership: caller to queue to receiver, or share ownership (with shared ptr) or the queue owns.
 -->
