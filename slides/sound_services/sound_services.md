@@ -29,7 +29,7 @@ Who are our clients and how do we get them to play a sound? (Remember Event Queu
 
 ![center width:800 drop-shadow:0,0,10px,#000](https://www.cs.unc.edu/~stotts/GOF/hires/Pictures/singl014.gif)
 
-“Ensure a class only has one instance and provide a global point of access to it.”
+“Ensure a class has only one instance and provide a global point of access to it.”
 
 
 <!-- Who knows the simngleton pattern? See what they know of it.-->
@@ -318,6 +318,8 @@ class sound_system
 public:
   virtual ~sound_system() = default;
   virtual void play(const sound_id id, const float volume) = 0;
+
+  // ...and other relevant methods of course...
 };
 ```
 
@@ -348,7 +350,6 @@ public:
 };
 ```
 Is ***final***!
-Is a singleton (with lower case s)
 
 ---
 # Implementation
@@ -368,7 +369,7 @@ void main()
   // at the start: register a sound system
   servicelocator::register_sound_system(std::make_unique<sdl_sound_system>());
 
-  // lots of code
+  // ...lots of code...
 
   // start using the sound system.
   auto& ss = servicelocator::get_sound_system();
@@ -447,7 +448,10 @@ public:
     _ss_instance = ss == nullptr ? std::make_unique<null_sound_system>() : std::move(ss);
   }
 };
-///... somehwere in a cpp:
+```
+
+```cpp
+//... somehwere in a cpp:
 std::unique_ptr<sound_system> servicelocator::_ss_instance{ std::make_unique<null_sound_system>() };
 ```
 
@@ -456,7 +460,7 @@ std::unique_ptr<sound_system> servicelocator::_ss_instance{ std::make_unique<nul
 ---
 # Service locator
 
-You can change the service while running
+You can change a service while running
 - For muting the sound
 - For applying a different render mode
 - To have another input controller
@@ -472,7 +476,6 @@ The service locator does not have to be global, it can also be local to a class.
 What is it that this “play” function must do?
 
 ```cpp
-
 void dae::sdl_sound_system::play(const sound_id id, const float volume)
 {
   auto audioclip = audioclips[id];
@@ -529,7 +532,7 @@ The audio needs to be loaded and played on **a different thread**
 
 Make use of an **Event Queue** to add “play sound” requests for the other thread
 Your thread processes the requests from the queue and while there is nothing in it, **does nothing**.
- - Think: how would you implement this? The thread needs to be notified when there is work to be done.
+ - Think: how would you implement this? The sound thread needs to be **notified** when there is work to be done.
 
 Also think about **Pimpl**! We do not want to expose the used audio library to the user of our engine.
 
