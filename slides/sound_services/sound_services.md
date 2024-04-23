@@ -541,3 +541,90 @@ Submit a version of your engine + game where some sounds can be played
 - Or with a key if you don't have a game yet
 
 The engine must be a **static library** by now. 
+
+---
+
+# Singletons in Unity
+
+What I often see
+
+```csharp
+public class GameController
+{
+  public GameController Instance { get; private set; }
+
+  private void Awake()
+  {
+    if(Instance == null)
+      Instance = this;
+    else
+      Destroy(gameObject);
+  }
+
+  // ... more code ...
+}
+```
+
+What's wrong with this?
+
+<!-- 
+- Instance does not create the singleton if it doesn't exist
+- The singleton should exist in the scene
+- The singleton will be destroyed if the next scene is loaded
+-->
+
+<sub>(https://gamedevbeginner.com/singletons-in-unity-the-right-way/ is a collection of more bad examples)</sub>
+
+---
+
+# Check this
+
+```csharp
+public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
+{
+    static T m_Instance;
+    static bool hasBeenCreated;
+    public static T Instance { get {
+      if (m_Instance == null)
+      {
+          m_Instance = FindAnyObjectByType<T>();
+          if (m_Instance == null)
+          {
+              if (!hasBeenCreated)
+                m_Instance = new GameObject("_" + typeof(T), typeof(T)).GetComponent<T>();
+          }
+          else
+          {
+            hasBeenCreated = true;
+            DontDestroyOnLoad(m_Instance);
+            m_Instance.Init();
+          }
+          return m_Instance;
+        }
+    }
+```
+---
+
+# Check this
+
+``` csharp
+    // If no other monobehaviour request the instance in an awake function
+    // executing before this one, no need to search the object.
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+        if (m_Instance == null)
+        {
+            m_Instance = this as T;
+            hasBeenCreated = true;
+            m_Instance.Init();
+        }
+    }
+
+    // This function is called when the instance is used the first time
+    // Put all the initializations you need here, as you would do in Awake
+    protected virtual void Init() { }
+}
+```
+
+Not such a walk in the park ;)
