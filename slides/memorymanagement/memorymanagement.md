@@ -533,6 +533,23 @@ That last option is what we did at Larian in the Gambryo Engine, we had a NiMemO
 
 ---
 
+# std allocators
+
+Downside: are passed as a class, not an instance.
+
+See https://godbolt.org/z/7h8993bc5 as an example that illustrates this.
+
+At EA this is one of the reasons to run their own stl (keep in mind, this is a page from 2007): 
+https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2271.html#std_allocator
+
+Often engines have their own container types that allow for custom allocators by instance.
+
+
+
+
+
+---
+
 # Doubly-linked free storage
 
 Resembles the single linked list
