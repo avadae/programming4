@@ -270,7 +270,7 @@ void HandleInput()
 ---
 # Implementation
 
-Using static instances
+Option one: using static instances, set the new state
 
 ```cs
 abstract class PlayerState {
@@ -303,6 +303,8 @@ If there is data, and the states are shared among multiple objects, this is no l
 
 ---
 # Alternative implementation
+
+Option two: return the new state
 
 ```cs
 class DuckingState : PlayerState
