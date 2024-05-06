@@ -274,7 +274,7 @@ struct Header
 
 struct Block : Header
 {
-    const static int size = 16;
+    const static int size = sizeof(void*);
     union
     {
         Block* next;
@@ -387,8 +387,6 @@ void * operator new[] (size_t nbBytes, dae::MemoryAllocator* allocator);
 void operator delete (void* pointerToBuffer) noexcept;
 
 void operator delete[] (void* pointerToBuffer) noexcept;
-
-void operator delete (void* pointerToBuffer, dae::MemoryAllocator* allocator);
 ```
 
 ---
@@ -479,16 +477,6 @@ void * operator new (size_t nbBytes)
 So the delete now can become:
 
 ```cpp
-void operator delete (void* pointerToBuffer, MemoryAllocator *allocator) noexcept
-{
-    if (pointerToBuffer != nullptr)
-    {
-        MemoryAllocator::Tag* const tag = 
-            reinterpret_cast<MemoryAllocator::Tag*> (pointerToBuffer) - 1;
-        allocator->Release(tag);
-    }
-}
-
 void operator delete(void * pointerToBuffer) noexcept
 {
     if (pointerToBuffer != nullptr)
