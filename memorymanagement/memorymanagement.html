@@ -268,7 +268,7 @@ Free heap memory with <code>free</code> or <code>delete</code></p>
 
 <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Block</span> : Header
 {
-    <span class="hljs-type">const</span> <span class="hljs-type">static</span> <span class="hljs-type">int</span> size = <span class="hljs-number">16</span>;
+    <span class="hljs-type">const</span> <span class="hljs-type">static</span> <span class="hljs-type">int</span> size = <span class="hljs-built_in">sizeof</span>(<span class="hljs-type">void</span>*);
     <span class="hljs-keyword">union</span>
     {
         Block* next;
@@ -383,8 +383,6 @@ Free heap memory with <code>free</code> or <code>delete</code></p>
 <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span> <span class="hljs-params">(<span class="hljs-type">void</span>* pointerToBuffer)</span> <span class="hljs-keyword">noexcept</span></span>;
 
 <span class="hljs-type">void</span> <span class="hljs-keyword">operator</span> <span class="hljs-keyword">delete</span>[] (<span class="hljs-type">void</span>* pointerToBuffer) <span class="hljs-keyword">noexcept</span>;
-
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span> <span class="hljs-params">(<span class="hljs-type">void</span>* pointerToBuffer, dae::MemoryAllocator* allocator)</span></span>;
 </code></pre>
 <footer>Programming 4</footer>
 </section>
@@ -462,17 +460,7 @@ Free heap memory with <code>free</code> or <code>delete</code></p>
 <header>Memory allocators</header>
 <h1 id="overriding-new-and-delete-4">Overriding new and delete</h1>
 <p>So the delete now can become:</p>
-<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span> <span class="hljs-params">(<span class="hljs-type">void</span>* pointerToBuffer, MemoryAllocator *allocator)</span> <span class="hljs-keyword">noexcept</span>
-</span>{
-    <span class="hljs-keyword">if</span> (pointerToBuffer != <span class="hljs-literal">nullptr</span>)
-    {
-        MemoryAllocator::Tag* <span class="hljs-type">const</span> tag = 
-            <span class="hljs-built_in">reinterpret_cast</span>&lt;MemoryAllocator::Tag*&gt; (pointerToBuffer) - <span class="hljs-number">1</span>;
-        allocator-&gt;<span class="hljs-built_in">Release</span>(tag);
-    }
-}
-
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span><span class="hljs-params">(<span class="hljs-type">void</span> * pointerToBuffer)</span> <span class="hljs-keyword">noexcept</span>
+<pre><code class="language-cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span><span class="hljs-params">(<span class="hljs-type">void</span> * pointerToBuffer)</span> <span class="hljs-keyword">noexcept</span>
 </span>{
     <span class="hljs-keyword">if</span> (pointerToBuffer != <span class="hljs-literal">nullptr</span>)
     {
