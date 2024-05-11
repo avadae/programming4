@@ -16,7 +16,7 @@ author: ava
 
 # Problem
 
-![center drop-shadow:0,0,10px,#000](image.png)
+![center width:800 drop-shadow:0,0,10px,#000](https://imgs.xkcd.com/comics/compiling.png)
 
 How bad do you think it can be?
 
