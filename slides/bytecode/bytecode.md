@@ -315,17 +315,3 @@ Lumberyard | Lua
 CryEngine | Lua
 
 </center>
-
----
-
-# Exercise
-
-Integrate Lua with C++
-
-Write a program that can read and execute a given compiled Lua script
-The script adds and removes a few NPCs
-
-Write your own lua script that adds and removes some NPC's
-Add a SetHealth function that takes an NPC name and new health value
-Use that in your script.
-Log the results in the Dump method of the NPCManager
