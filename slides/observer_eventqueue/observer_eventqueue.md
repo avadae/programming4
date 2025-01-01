@@ -8,8 +8,6 @@ author: ava
 
 # Observer & Event Queue
 
-<!-- footer: Programming 4 -->
-
 ---
 <!-- header: Software design patterns -->
 <!-- paginate: true -->
@@ -40,6 +38,8 @@ Achievement from Team Fortress 2
 Not very portable, right? Ask for alternatives. Let’s see what they come up with.
 Challenges: What about 100 kills. What about 20 kills with a flamethrower, etc... 
 -->
+
+<!-- footer: Programming 4  - Observer & Event Queue -->
 
 ---
 # Problem statement
@@ -429,7 +429,7 @@ void dae::Ghost::HandleEvent(const Event* pEvent) {
 -->
 
 --- 
-# Event
+# Event Id
 
 <div class="columns"><div>
 
@@ -437,71 +437,249 @@ Has two parts
 - Type (or Name, or Id)
 - Arguments
 
-“EventType” like this? What are the pros and cons?
+“EventId” like this? What are the pros and cons?
 
 </div><div>
 
 ```cpp
-enum EventType {
-  LEVEL_STARTED,
-  PLAYER_SPAWNED,
-  DIALOG_STARTED,
-  DIALOG_ENDED,
-  BOMB_EXPLODED,
-  //...
-}
+struct EventArg{};
 
 struct Event {
+  const std::string id;
+
   static const uint8_t MAX_ARGS = 8;
-  
-  EventType m_type;
-  uint8_t m_numArgs;
-  EventArg m_args[MAX_ARGS];
+  uint8_t nbArgs;
+  EventArg args[MAX_ARGS];
+
+  explicit Event(const char* _id) : id{_id} {}
+};
+```
+```cpp
+Event e("PlayerDied");
+```
+```cpp
+if(e.id == "PlayerDied") {
+  // handle player death event
 }
 ```
 
 </div>
 
-<!-- enums/ints are easy to compare, but list needs to be known in advance -->
+<!-- string comparisons! -->
+
+---
+
+# Event Id
+
+<div class="columns"><div>
+
+Has two parts
+- Type (or Name, or Id)
+- Arguments
+
+“EventId” like this? What are the pros and cons?
+
+</div><div>
+
+```cpp
+struct EventArg{};
+
+enum EventId {
+  LEVEL_STARTED,
+  BOMB_EXPLODED,
+  PLAYER_DIED,
+  //...
+};
+
+struct Event {
+  const EventId id;  
+
+  static const uint8_t MAX_ARGS = 8;
+  uint8_t nbArgs;
+  EventArg args[MAX_ARGS];
+
+  explicit Event(EventId _id) : id{_id} {}
+}
+```
+```cpp
+Event e(PLAYER_DIED);
+```
+```cpp
+if(e.id == PLAYER_DIED) {
+  // handle player death event
+}
+```
+
+</div>
+
+<!-- 
+enums/ints are easy to compare, but list needs to be known in advance 
+no scoped enums :)
+-->
+
+---
+
+# Event Id
+
+<div class="columns"><div>
+
+Yes! No scoped enums.
+
+
+
+Has two parts
+- Type (or Name, or Id)
+- Arguments
+
+“EventId” like this? What are the pros and cons?
+
+
+
+</div><div>
+
+```cpp
+struct EventArg{};
+
+enum class EventId {
+  LEVEL_STARTED,
+  BOMB_EXPLODED,
+  PLAYER_DIED,
+  //...
+};
+
+struct Event {
+  const EventId id;  
+
+  static const uint8_t MAX_ARGS = 8;
+  uint8_t nbArgs;
+  EventArg args[MAX_ARGS];
+
+  explicit Event(EventId _id) : id{_id} {}
+}
+```
+```cpp
+Event e(EventId::PLAYER_DIED);
+```
+```cpp
+if(e.id == EventId::PLAYER_DIED) {
+  // handle player death event
+}
+```
+
+</div>
 
 --- 
-# Event
 
-<div class="columns"><div>
+# Event Id
 
-Has two parts
-- Type (or Name, or Id)
-- Arguments
+- With strings
+  - Id's don't need to be known in advance :smile:
+  - String comparisons :sob:
+- With a **scoped** enum 
+  - Fast comparison/indexing :smile:
+  - All events are declared in one place :cry:
+  - Can’t be extended :sob:
 
-“EventType” like this? What are the pros and cons?
-- Fast comparison/indexing
-- All events are globally known
-- Can’t be extended
+Applicable for small projects where either perfomance or extendability are not that important.
 
-Applicable for small projects
+Any other options?
 
-</div><div>
+---
+
+# Event Id
+
+We could make use of an SDBM hash
 
 ```cpp
-enum EventType {
-  LEVEL_STARTED,
-  PLAYER_SPAWNED,
-  DIALOG_STARTED,
-  DIALOG_ENDED,
-  BOMB_EXPLODED,
-  //...
-}
+unsigned int sdbm_hash(const char *str) {
+    unsigned int hash = 0;
+    int c;
 
-struct Event {
-  static const uint8_t MAX_ARGS = 8;
-  
-  EventType m_type;
-  uint8_t m_numArgs;
-  EventArg m_args[MAX_ARGS];
+    while ((c = *str++)) {
+        hash = c + (hash << 6) + (hash << 16) - hash;
+    }
+
+    return hash;
+}
+```
+This function generates a simple (non-secure) hash of a given string in O(n) time.
+
+Instead of EventId as an enum we simply use an unsigned int and we generate id's with text:
+
+```
+Event e;
+e.id = sdbm_hash("PlayerDied");
+```
+
+Downside?
+
+<sub>http://www.cse.yorku.ca/~oz/hash.html</sub>
+
+<!-- 
+Downside is that this needs to be calculated at runtime.
+-->
+
+---
+
+# Event Id
+
+```cpp
+template <int length> struct sdbm_hash 
+{
+    constexpr static unsigned int _calculate(const char* const text, unsigned int& value) {
+        const unsigned int character = sdbm_hash<length - 1>::_calculate(text, value);
+        value = character + (value << 6) + (value << 16) - value;
+        return text[length - 1];
+    }
+
+    constexpr static unsigned int calculate(const char* const text) {
+        unsigned int value = 0;
+        const auto character = _calculate(text, value);
+        return character + (value << 6) + (value << 16) - value;
+    }
+};
+
+template <> struct sdbm_hash<1> {
+    constexpr static int _calculate(const char* const text, unsigned int& ) { return text[0]; }
+};
+
+template <size_t N> constexpr unsigned int make_sdbm_hash(const char (&text)[N]) {
+    return sdbm_hash<N - 1>::calculate(text);
 }
 ```
 
-</div>
+<sub>Inspired by: *"Learn C++ For Game Development"*</sub>
 
-<!-- enums/ints are easy to compare, but list needs to be known in advance -->
+<!-- 
+The last method I've added myself: In C++, string literals like "QuitEvent" are of type const char[N], where N includes the null terminator ('\0'). When a function template takes an array by reference (e.g., const char (&text)[N]), the compiler deduces the size of the array (N) automatically.
+-->
 
+---
+
+# Event Id
+
+And now we can write:
+
+```cpp
+struct EventArg{};
+
+using EventId = unsigned int;
+
+struct Event {
+  const EventId id;
+
+  static const uint8_t MAX_ARGS = 8;
+  uint8_t nbArgs;
+  EventArg args[MAX_ARGS];
+
+  explicit Event(EventId _id) : id{_id} {}
+}
+```
+```cpp
+Event e(make_sdbm_hash("PlayerDied"));
+```
+```cpp
+if(e.id == make_sdbm_hash("PlayerDied")) {
+  // handle player death event
+}
+```

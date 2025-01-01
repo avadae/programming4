@@ -16,11 +16,15 @@ author: ava
 
 # Software design what patterns?
 
-- Software design patterns are **blueprints** of **possible** solutions to **common** problems
-- They are hints to how you can solve a particular problem
-- They're only that, they're no law
-- Different contexts call for different solutions
-- Language agnostic
+Software design patterns are **blueprints** of **possible** solutions to **common** problems
+
+They are hints to how you can solve a particular problem
+
+They're only that, they're no law
+
+Different contexts call for different solutions
+
+Language agnostic
 
 ---
 
@@ -45,6 +49,8 @@ author: ava
   - https://journal.stuffwithstuff.com
 
 - http://gameprogrammingpatterns.com
+
+
 
 ---
 
@@ -118,6 +124,14 @@ while(do_continue)
   render();
 }
 ```
+---
+
+# In the browser?
+
+Via emscripten we can compile our c++ programs to webassembly. We can't maintain our infinite loop however.
+
+https://www.jamesfmackenzie.com/howto/getting-started-with-webassembly-part-3-emscripten-loops/
+
 ---
 
 # Turbo speed!
