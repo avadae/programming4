@@ -604,14 +604,13 @@ unsigned int sdbm_hash(const char *str) {
 ```
 This function generates a simple (non-secure) hash of a given string in O(n) time.
 
-Instead of EventId as an enum we simply use an unsigned int and we generate id's with text:
+Instead of EventId as a string or an enum we simply use an unsigned int and we generate id's with text:
 
-```
-Event e;
-e.id = sdbm_hash("PlayerDied");
+```cpp
+Event e(sdbm_hash("PlayerDied"));
 ```
 
-Downside?
+But what is the downside now?
 
 <sub>http://www.cse.yorku.ca/~oz/hash.html</sub>
 
