@@ -128,9 +128,36 @@ while(do_continue)
 
 # In the browser?
 
-Via emscripten we can compile our c++ programs to webassembly. We can't maintain our infinite loop however.
+This won't work in the browser
 
-https://www.jamesfmackenzie.com/howto/getting-started-with-webassembly-part-3-emscripten-loops/
+```cpp
+bool do_continue = true;
+while(do_continue)
+{
+  do_continue = process_input();
+  update();
+  render();
+}
+```
+
+Via emscripten we can compile our c++ programs to webassembly. We can't maintain our infinite loop however, we need to provide a callback:
+
+```cpp
+void RunOneFrame()
+{
+  do_continue = process_input();
+  update();
+  render();
+}
+
+emscripten_set_main_loop(&RunOneFrame, 0, true);
+```
+
+<sub>https://www.jamesfmackenzie.com/howto/getting-started-with-webassembly-part-3-emscripten-loops/</sub>
+
+<!-- 
+The 0 is the fps, 0 to let the browser decide and true is for "simulate infinite loop"
+-->
 
 ---
 
@@ -521,7 +548,7 @@ over inheritance</b>
 
 # Component
 
-Prefer composition over inheritance. (Item 34 in "C++ coding standards" by Herb Sutter)
+*Prefer composition over inheritance.* (Item 34 in "C++ coding standards" by Herb Sutter)
 
 - The game world exists of “GameObjects”.
 - Every game object has several components that govern an aspect of the Gameobject
@@ -536,13 +563,13 @@ Prefer composition over inheritance. (Item 34 in "C++ coding standards" by Herb 
 # Inheritance
 
 Wait, inheritance is bad?
-NO
+**NO**
 Obviously not, we’ll be using a lot of inheritance while implementing the component pattern.
 
 Choose the right tool for the right job. 
 Don’t use a swiss knife to hammer in a nail.
 
-Inherit, not to reuse, but to be reused. (Item 37 in "C++ coding standards")
+*Inherit, not to reuse, but to be reused.* (Item 37 in "C++ coding standards" by Herb Sutter)
 
 ---
 
