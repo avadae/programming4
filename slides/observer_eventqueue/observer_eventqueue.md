@@ -433,7 +433,7 @@ void dae::Ghost::HandleEvent(const Event* pEvent) {
 
 <div class="columns"><div>
 
-Has two parts
+An event has two parts
 - Type (or Name, or Id)
 - Arguments
 
@@ -473,7 +473,7 @@ if(e.id == "PlayerDied") {
 
 <div class="columns"><div>
 
-Has two parts
+An event has two parts
 - Type (or Name, or Id)
 - Arguments
 
@@ -523,17 +523,13 @@ no scoped enums :)
 
 <div class="columns"><div>
 
-Yes! No scoped enums.
-
-
-
-Has two parts
+An event has two parts
 - Type (or Name, or Id)
 - Arguments
 
 “EventId” like this? What are the pros and cons?
 
-
+**Yes! Only use scoped enums.**
 
 </div><div>
 
