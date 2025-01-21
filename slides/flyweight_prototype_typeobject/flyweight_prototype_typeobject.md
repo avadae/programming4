@@ -443,15 +443,13 @@ Just use templates! Obviously!
 
 ```cpp
 template <typename T>
-class Spawner
+class Spawner final
 {
 public:
     static_assert(std::is_base_of<Monster,T>::value, 
         "T must derive from Monster");
 
-    virtual ~Spawner() = default;
-
-    virtual Monster* SpawnMonster()
+    Monster* SpawnMonster()
     {
         return new T();
     }
@@ -481,3 +479,249 @@ using CentaurSpawner = Spawner<Centaur>;
 Yes, but in what issue do we run again?
 
 <!-- this is all defined at compile time, we need it at run time, aka data driven -->
+
+---
+
+<!-- header: Composition FTW -->
+
+# Enter composition
+
+Add components?
+
+<!-- No, composition is not only components -->
+
+---
+
+# Enter composition: Type Object
+
+Instead of having a class for each new breed of monster, we say a monster **has a** breed.
+
+![center w:1200 drop-shadow:0,0,10px,#000](https://gameprogrammingpatterns.com/images/type-object-breed.png)
+
+- No inheritance
+- 2 classes
+
+> Define a **type object** class and a **typed object** class. Each type object instance represents a different logical type. Each typed object stores a **reference to the type object that describes its type**.
+
+---
+
+# Type Object
+
+<div class="columns"><div>
+
+```cpp
+class Breed
+{
+    int _health;
+    float _speed;
+    const char* _weapon;
+public:
+    Breed(const char* weapon, int health, 
+        float speed) : _weapon(weapon), 
+        _health(health), _speed(speed) {}
+
+    int GetHealth() const { return _health; }    
+    float GetSpeed() const { return _speed; }
+    const char* GetWeapon() const { 
+        return _weapon; 
+    }
+};
+```
+
+</div><div>
+
+```cpp
+class Monster
+{
+    int _health;
+    Breed& _breed;
+
+public:
+    Monster(Breed& breed) :
+    _health(breed.GetHealth()), _breed(breed) {}
+
+    const char* GetWeapon() const { 
+        return _breed.GetWeapon(); 
+    }
+
+    //... lots of other methods
+};
+```
+
+</div></div>
+
+<!-- Notice how these two classes cover all the previous code -->
+
+---
+
+# Type Object
+
+Making type objects more like types: "constructors"
+
+<div class="columns"><div>
+
+```cpp
+class Breed
+{
+    int _health;
+    float _speed;
+    const char* _weapon;
+public:
+    Breed(const char* weapon, int health, 
+        float speed) : _weapon(weapon), 
+        _health(health), _speed(speed) {}
+
+    Monster* CreateMonster() { 
+        return new Monster(*this); 
+    }
+
+    int GetHealth() const { return _health; }    
+    float GetSpeed() const { return _speed; }
+    const char* GetWeapon() const { 
+        return _weapon; 
+    }
+};
+```
+
+</div><div>
+
+```cpp
+class Monster
+{
+    friend class Breed;
+    int _health;
+    Breed& _breed;
+
+    Monster(Breed& breed) :
+    _health(breed.GetHealth()), _breed(breed) {}
+
+public:
+    const char* GetWeapon() const { 
+        return _breed.GetWeapon(); 
+    }
+
+    //... lots of other methods
+};
+```
+
+</div></div>
+
+<!-- Here we just return a new object, but we could add a lot of other initialization here => this is a factory method after all. -->
+
+---
+
+# Type Object considerations
+
+Use it when:
+
+- At compile time it's impossible to know what types there are going to be.
+- You want to change types at runtime (add/edit/remove)
+
+But:
+
+- You need to maintain your own type system now, creating them, loading them into memory, unloading them when they're no longer required, etc
+- How will you define behaviour for each type? Suggestions?
+
+Can the type change at runtime?
+- Could be useful for an object pool of monsters
+
+Do we support inheritance?
+- A breed could refer to a parent breed
+  - To create Orc Zombies for example
+
+
+
+<!-- Behaviour can via id's to some sort behaviour/ai like "patrolling" or something. Better: byte code pattern -> lua 
+
+Changing types enabled object pools, just swap the breed, but that has a lot of other implications
+
+Without inheritance we might be copy-pasting a lot of data.
+-->
+
+---
+
+# Still need that spawning
+
+Template version no longer works
+
+```cpp
+using TrollSpawner = Spawner<Troll>;
+//...
+```
+
+How then?
+
+---
+
+# Still need that spawning
+
+Template version no longer works
+
+```cpp
+using TrollSpawner = Spawner<Troll>;
+//...
+```
+
+Yes, **composition**, via the *prototype pattern*. 
+
+> Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.
+
+---
+
+# Prototype
+
+We add a clone function to the monster and use that in the spawner:
+
+<div class="columns"><div>
+
+```cpp
+class Spawner final
+{
+    Monster* _prototype;
+public:
+    Spawner(Monster* prototype) : 
+        _prototype(prototype) {}
+
+    Monster* SpawnMonster()
+    {
+        return _prototype->Clone();
+    }
+};
+```
+
+</div><div>
+
+```cpp
+class Monster
+{
+    friend class Breed;
+    int _health;
+    Breed& _breed;
+
+    Monster(Breed& breed) :
+    _health(breed.GetHealth()), _breed(breed) {}
+
+public:
+    const char* GetWeapon() const { 
+        return _breed.GetWeapon(); 
+    }
+
+    Monster* Clone()
+    {
+        auto result = new Monster(_breed)
+        result->_health = _health;
+        return result;
+    }
+
+    //... lots of other methods
+};
+```
+
+</div></div>
+
+---
+
+# Cloneable
+
+```cpp
+```
