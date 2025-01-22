@@ -38,7 +38,7 @@ jobs:
       - name: Marp Build to pdf
         uses: docker://marpteam/marp-cli:v4.1.1
         with:
-          args: -c package.json --pdf --allow-local-files --notes=false
+          args: -c package.json --pdf --allow-local-files --pdf-notes=false
         env:
           MARP_USER: root:root
           PUPPETEER_TIMEOUT: 0
