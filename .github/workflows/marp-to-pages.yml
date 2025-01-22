@@ -25,10 +25,10 @@ jobs:
         run: mkdir -p build
 
       - name: Copy images
-        run: rsync -r --include='*/' --include='*.jpg' --include='*.png' --include='*.svg' --include='*.gif' --include='*.mp4' --exclude='*' slides/ build/slides/
+        run: rsync -r --include='*/' --include='*.jpg' --include='*.png' --include='*.svg' --include='*.gif' --include='*.mp4' --include='*.webp' --exclude='*' slides/ build/slides/
 
       - name: Marp Build
-        uses: docker://marpteam/marp-cli:v3.4.0
+        uses: docker://marpteam/marp-cli:v4.1.1
         with:
           args: -c package.json --allow-local-files
         env:
@@ -36,9 +36,9 @@ jobs:
           PUPPETEER_TIMEOUT: 0
 
       - name: Marp Build to pdf
-        uses: docker://marpteam/marp-cli:v3.4.0
+        uses: docker://marpteam/marp-cli:v4.1.1
         with:
-          args: -c package.json --pdf --allow-local-files
+          args: -c package.json --pdf --allow-local-files --notes=false
         env:
           MARP_USER: root:root
           PUPPETEER_TIMEOUT: 0
