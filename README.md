@@ -17,6 +17,7 @@ The slides are not organised in weeks, since the order in which we discuss the p
 - [State and Double buffer](https://avadae.github.io/programming4/state_doublebuffer/state_doublebuffer.html)
 - [Byte code](https://avadae.github.io/programming4/bytecode/bytecode.html)
 - [Singleton and Service locators](https://avadae.github.io/programming4/sound_services/sound_services.html)
+- [Flyweight, Prototype and Type Objects](https://avadae.github.io/programming4/flyweight_prototype_typeobject/flyweight_prototype_typeobject.html)
 
 ### Memory
 
