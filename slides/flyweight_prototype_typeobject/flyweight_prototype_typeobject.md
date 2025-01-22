@@ -16,7 +16,7 @@ author: ava
 
 Quick! Write me a MMORPG with hundreds of monsters, spawning from various caves, pits, nests and whatnot!
 
-*Sure thing boss, I've got a degree from DAE:\**
+*Sure thing boss, I've got a degree in DAE:\**
 
 ```cpp
 class Monster
@@ -492,7 +492,9 @@ Add components?
 
 ---
 
-# Enter composition: Type Object
+# Type Object
+
+> Allow the flexible creation of new "classes" by creating a class, each instance of which represents a different type of object.
 
 Instead of having a class for each new breed of monster, we say a monster **has a** breed.
 
@@ -670,7 +672,7 @@ Yes, **composition**, via the *prototype pattern*.
 
 # Prototype
 
-We add a clone function to the monster and use that in the spawner:
+We add a clone function to the ``Monster`` and use that in the ``Spawner``:
 
 <div class="columns"><div>
 
@@ -723,5 +725,124 @@ public:
 
 # Cloneable
 
+Often happens via an interface (exists by default in .Net and Java)
+
 ```cpp
+class ICloneable
+{
+public:
+    virtual ~ICloneable() = default;
+    virtual ICloneable* Clone() = 0;
+}
 ```
+
+But why a Clone function? Why not simply use the copy constructor?
+
+<!-- The copy constructor is not virtual, we need to know the type of what we copy. -->
+
+---
+
+# More data
+
+Let's forget the ``Breed`` class for a moment and have a look at that "lots of other data"
+
+```cpp
+class Monster
+{
+    int _health;
+    float _speed;
+
+    Mesh _mesh;
+    Shader _shader;
+    Texture2D _albedo;
+    Texture2D _normal;
+    Color _albedoColor;
+    Color _teamColor;
+    Transform _transform;
+    
+    //... still lots of other data, like animations, sound, and whatnot.
+
+public:
+    Monster(int health, float speed);
+    virtual ~Monster() = default;
+
+    virtual const char* GetWeapon() = 0;
+};
+```
+
+<!-- 
+Having this data copied for every monster is obviously not the best idea
+- lots of mem
+- doesn't fit in cacheline anymore
+Components again?
+-->
+
+---
+
+# Composition FTW
+
+Components? Perhaps, or:
+
+<div class="columns"><div>
+
+```cpp
+class MonsterModel
+{
+    Mesh _mesh;
+    Shader _shader;
+    Texture2D _albedo;
+    Texture2D _normal;
+    Color _albedoColor;
+}
+```
+
+</div><div>
+
+
+```cpp
+class Monster
+{
+    int _health;
+    float _speed;
+
+    MonsterModel* _model;
+    Color _teamColor;
+    Transform _transform;
+
+public:
+    Monster(int health, float speed);
+    virtual ~Monster() = default;
+
+    virtual const char* GetWeapon() = 0;
+};
+```
+
+</div></div>
+
+One set of model data can now be used by all Monsters of the same type.
+
+---
+
+# Flyweight
+
+> Use sharing to support large numbers of fine-grained objects efficiently
+
+The ``MonsterModel`` contains the shared data of the monsters that look the same.
+
+- This data is often **immutable**.
+- This data is called the **intrinsic** state of the instance.
+- The other data, unique to the instance, is the **extrinsic** state.
+
+## Considerations
+
+<!-- In the book, it's called "context-free" instead of intrinsic.-->
+
+- What popular example do you know of this pattern?
+
+<!-- Instanced rendering -->
+
+- If we put everything together, a ``Monster`` now has a ``Breed`` and a ``MonsterModel`` - can we combine these?
+
+<!-- Yes and no, it's a design choice. The intent between the two is different. -->
+
+- Both the **Flyweight** and **Type Object** pattern go well together with **Object Pool**.
