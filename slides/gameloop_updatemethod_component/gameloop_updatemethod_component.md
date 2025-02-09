@@ -8,8 +8,6 @@ author: ava
 
 # Gameloop, Update method & Component
 
-<!-- footer: Programming 4 -->
-
 ---
 <!-- header: Software design patterns -->
 <!-- paginate: true -->
@@ -25,6 +23,8 @@ They're only that, they're no law
 Different contexts call for different solutions
 
 Language agnostic
+
+<!-- footer: Programming 4 -->
 
 ---
 
@@ -49,8 +49,6 @@ Language agnostic
   - https://journal.stuffwithstuff.com
 
 - http://gameprogrammingpatterns.com
-
-
 
 ---
 
@@ -412,7 +410,19 @@ Solution?
 
 What happens when one object removes another in its Update?
 
-![center width:1200](delete_order.png)
+![center width:1500](delete.svg)
+
+<!--
+If Obj 2 deletes Obj 3 while iterating, elements will shift and Obj 4 will be skipped. Easy solution would be to iterate backwards, but no: if Obj 5 deletes Obj 4 elements shift and Obj 5 gets updated twice.
+-->
+
+---
+
+# Deleting objects
+
+What happens when one object removes another in its Update?
+
+![center width:1500](delete.svg)
 
 - Don’t remove them until all have been updated, but “mark” as dead.
 - Delete them after all updates have been finished.
