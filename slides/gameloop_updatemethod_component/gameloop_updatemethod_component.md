@@ -159,6 +159,18 @@ The 0 is the fps, 0 to let the browser decide and true is for "simulate infinite
 
 ---
 
+# On the NES
+
+Remember this from "Retro console & emulator programming"?
+
+![center w:800 drop-shadow:0,0,10px,#000](image.png)
+
+
+
+<sub>[Cruise, T. (2024). Classic game programming on the NES: Make Your Own Retro Video Game.](https://www.manning.com/books/classic-game-programming-on-the-nes)</sub>
+
+---
+
 # Turbo speed!
 
 ![center w:1100 drop-shadow:0,0,10px,#000](turbo.jpg)
