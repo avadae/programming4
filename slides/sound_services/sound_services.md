@@ -522,7 +522,7 @@ Create these audio services:
 - A logging service, that ***also*** logs the sounds to std::cout
 
 You can use **SDL_mixer** for this:
-- https://github.com/libsdl-org/SDL_mixer
+- <i class="fa-brands fa-github"></i> https://github.com/libsdl-org/SDL_mixer
 - But other sound systems are allowed too.
 
 ---

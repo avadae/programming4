@@ -40,7 +40,7 @@ class BaseComponent
 ```
 
 <!-- 
-- public default constructor: component can exisit without owner
+- public default constructor: component can exist without owner
 - owner pointer is protected, any subclass can mess things up
 - setowner method: possible to set nullpointer
 - setowner method: does not remove from the previous owner

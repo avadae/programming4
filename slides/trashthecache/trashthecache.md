@@ -1014,7 +1014,7 @@ Is a popular immediate mode GUI library, often used in game engines.
 
 ![center width:1200](image-15.png)
 
-<sub>Rainbow Six, Ubisoft. https://github.com/ocornut/imgui/wiki/software-using-dear-imgui</sub>
+<sub>Rainbow Six, Ubisoft. <i class="fa-brands fa-github"></i> https://github.com/ocornut/imgui/wiki/software-using-dear-imgui</sub>
 
 ---
 
@@ -1024,7 +1024,7 @@ Is a popular immediate mode GUI library, often used in game engines.
 
 Check out this (very) short overview:
 
-https://www.youtube.com/watch?v=LSRJ1jZq90k
+<i class="fa-brands fa-youtube"></i> https://www.youtube.com/watch?v=LSRJ1jZq90k
 
 Let’s set this up! Check out the Dear ImGui assignment on Leho
 
@@ -1037,4 +1037,4 @@ Using the results of the previous exercise, instead of writing the timings to co
 
 ![center](<Programming 4 assignment_2.jpg>)
 
-Hint: https://github.com/soulthreads/imgui-plot
+Hint: <i class="fa-brands fa-github"></i> https://github.com/soulthreads/imgui-plot
