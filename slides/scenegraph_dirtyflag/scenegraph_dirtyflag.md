@@ -79,7 +79,7 @@ class BaseComponent
 # Components and their owner
 
 SetOwner has to do **four** things:
-- Check if the new owner is not null
+- Validate the new owner (not null and not current)
 - Remove itself as a component from the previous owner.
 - Set the given owner on itself.
 - Add itself as a component to the given parent.
@@ -87,8 +87,8 @@ SetOwner has to do **four** things:
 ```cpp
 void SetOwner(GameObject* pOwner) 
 { 
-  assert(pOwner);
-  if (!pOwner)
+  assert(pOwner && pOwner != m_pOwner);
+  if (!pOwner || pOwner == m_pOwner)
     return;
   if (m_pOwner)
     m_pOwner->RemoveComponent(this);
