@@ -434,7 +434,9 @@ glm::vec3 Transform::GetWorldPosition() const
 }
 ```
 
-<!-- Recalculates every time, recursively! -->
+Where will this be executed?
+
+<!-- Recalculates every time, recursively! In the hot code path! -->
 
 --- 
 
@@ -473,11 +475,11 @@ void SetParent(GameObject* parent, bool keepWorldPosition)
   {
     if (keepWorldPosition)
       SetLocalPosition(GetWorldPosition() - parent->GetWorldPosition());
-    SetPositionDirty()
+    SetPositionDirty();
   }
   if(m_parent) m_parent->RemoveChild(this);
   m_parent = parent;
-  if(m_parent) m_parent->AddChild(this)
+  if(m_parent) m_parent->AddChild(this);
 }
 
 void SetLocalPosition(const glm::vec3& pos)

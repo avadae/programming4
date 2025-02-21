@@ -21,6 +21,6 @@ The slides are not organised in weeks, since the order in which we discuss the p
 
 ### Memory
 
-- [Memory](https://avadae.github.io/programming4/trashthecache/trashthecache.html)
+- [Memory and Data Locality](https://avadae.github.io/programming4/thrashthecache/thrashthecache.html)
 - [Memory management and Object pool](https://avadae.github.io/programming4/memorymanagement/memorymanagement.html)
 
