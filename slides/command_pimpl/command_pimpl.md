@@ -535,6 +535,17 @@ This is how virtually all commands in software works... Of course, in-game actio
 
 ---
 
+# Success & Failure
+
+The command pattern allows to have command "state"
+
+- Success - the command was executed successfully
+- Failed - the command returned an error
+- Canceled - the command is not executed for some reason
+- It can keep track of how many times it has been executed
+
+---
+
 <!-- header: Game programming patterns - Pimpl -->
 
 # Pimpl
