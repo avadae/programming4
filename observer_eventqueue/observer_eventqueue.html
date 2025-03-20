@@ -570,13 +570,13 @@
 <h1 id="event-id-5">Event Id</h1>
 <pre><code class="language-cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-type">int</span> length&gt; <span class="hljs-keyword">struct</span> <span class="hljs-title class_">sdbm_hash</span> 
 {
-    <span class="hljs-keyword">constexpr</span> <span class="hljs-type">static</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> _calculate(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> text, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>&amp; value) {
+    <span class="hljs-keyword">consteval</span> <span class="hljs-type">static</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> _calculate(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> text, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>&amp; value) {
         <span class="hljs-type">const</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> character = sdbm_hash&lt;length - <span class="hljs-number">1</span>&gt;::_calculate(text, value);
         value = character + (value &lt;&lt; <span class="hljs-number">6</span>) + (value &lt;&lt; <span class="hljs-number">16</span>) - value;
         <span class="hljs-keyword">return</span> text[length - <span class="hljs-number">1</span>];
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-type">static</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> <span class="hljs-title">calculate</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> text)</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">consteval</span> <span class="hljs-type">static</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> <span class="hljs-title">calculate</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> text)</span> </span>{
         <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> value = <span class="hljs-number">0</span>;
         <span class="hljs-type">const</span> <span class="hljs-keyword">auto</span> character = _calculate(text, value);
         <span class="hljs-keyword">return</span> character + (value &lt;&lt; <span class="hljs-number">6</span>) + (value &lt;&lt; <span class="hljs-number">16</span>) - value;
@@ -584,10 +584,10 @@
 };
 
 <span class="hljs-keyword">template</span> &lt;&gt; <span class="hljs-keyword">struct</span> <span class="hljs-title class_">sdbm_hash</span>&lt;<span class="hljs-number">1</span>&gt; {
-    <span class="hljs-keyword">constexpr</span> <span class="hljs-type">static</span> <span class="hljs-type">int</span> _calculate(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> text, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>&amp; ) { <span class="hljs-keyword">return</span> text[<span class="hljs-number">0</span>]; }
+    <span class="hljs-keyword">consteval</span> <span class="hljs-type">static</span> <span class="hljs-type">int</span> _calculate(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> text, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>&amp; ) { <span class="hljs-keyword">return</span> text[<span class="hljs-number">0</span>]; }
 };
 
-<span class="hljs-keyword">template</span> &lt;<span class="hljs-type">size_t</span> N&gt; <span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> <span class="hljs-title">make_sdbm_hash</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> (&amp;text)[N])</span> </span>{
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-type">size_t</span> N&gt; <span class="hljs-function"><span class="hljs-keyword">consteval</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> <span class="hljs-title">make_sdbm_hash</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> (&amp;text)[N])</span> </span>{
     <span class="hljs-keyword">return</span> sdbm_hash&lt;N - <span class="hljs-number">1</span>&gt;::<span class="hljs-built_in">calculate</span>(text);
 }
 </code></pre>
