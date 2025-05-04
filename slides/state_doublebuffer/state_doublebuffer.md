@@ -267,6 +267,10 @@ void HandleInput()
 
 ![center w:1000 drop-shadow:0,0,10px,#000](https://www.dofactory.com/img/diagrams/net/state.png)
 
+<!--
+- Notice how there are no transitions modelled here.
+-->
+
 ---
 # Implementation
 
@@ -546,6 +550,8 @@ Say a ghost is within two units range of pacman, what possible issue lurks here?
 <!--
 If Pacman is updated first, he’s fine.
 If not, he gets caught.
+
+Draw this on the board - grid with 1 cell between ghost and pacman
 -->
 
 ---
