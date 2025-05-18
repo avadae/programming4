@@ -427,6 +427,23 @@
 <header>Composition FTW</header>
 <h1 id="type-object-1">Type Object</h1>
 <div class="columns"><div>
+<pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Monster</span>
+{
+    <span class="hljs-type">int</span> _health;
+    Breed&amp; _breed;
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">Monster</span>(Breed&amp; breed) :
+    _health(breed.<span class="hljs-built_in">GetHealth</span>()), _breed(breed) {}
+
+    <span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-title">GetWeapon</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ 
+        <span class="hljs-keyword">return</span> _breed.<span class="hljs-built_in">GetWeapon</span>(); 
+    }
+
+    <span class="hljs-comment">//... lots of other methods</span>
+};
+</code></pre>
+</div><div>
 <pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Breed</span>
 {
     <span class="hljs-type">int</span> _health;
@@ -444,23 +461,6 @@
     }
 };
 </code></pre>
-</div><div>
-<pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Monster</span>
-{
-    <span class="hljs-type">int</span> _health;
-    Breed&amp; _breed;
-
-<span class="hljs-keyword">public</span>:
-    <span class="hljs-built_in">Monster</span>(Breed&amp; breed) :
-    _health(breed.<span class="hljs-built_in">GetHealth</span>()), _breed(breed) {}
-
-    <span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-title">GetWeapon</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ 
-        <span class="hljs-keyword">return</span> _breed.<span class="hljs-built_in">GetWeapon</span>(); 
-    }
-
-    <span class="hljs-comment">//... lots of other methods</span>
-};
-</code></pre>
 </div></div>
 <footer>Programming 4  - Flyweights, Prototypes and Type Objects</footer>
 </section>
@@ -469,6 +469,24 @@
 <h1 id="type-object-2">Type Object</h1>
 <p>Making type objects more like types: &quot;constructors&quot;</p>
 <div class="columns"><div>
+<pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Monster</span>
+{
+    <span class="hljs-keyword">friend</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Breed</span>;
+    <span class="hljs-type">int</span> _health;
+    Breed&amp; _breed;
+
+    <span class="hljs-built_in">Monster</span>(Breed&amp; breed) :
+    _health(breed.<span class="hljs-built_in">GetHealth</span>()), _breed(breed) {}
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-title">GetWeapon</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ 
+        <span class="hljs-keyword">return</span> _breed.<span class="hljs-built_in">GetWeapon</span>(); 
+    }
+
+    <span class="hljs-comment">//... lots of other methods</span>
+};
+</code></pre>
+</div><div>
 <pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Breed</span>
 {
     <span class="hljs-type">int</span> _health;
@@ -488,24 +506,6 @@
     <span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-title">GetWeapon</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ 
         <span class="hljs-keyword">return</span> _weapon; 
     }
-};
-</code></pre>
-</div><div>
-<pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Monster</span>
-{
-    <span class="hljs-keyword">friend</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Breed</span>;
-    <span class="hljs-type">int</span> _health;
-    Breed&amp; _breed;
-
-    <span class="hljs-built_in">Monster</span>(Breed&amp; breed) :
-    _health(breed.<span class="hljs-built_in">GetHealth</span>()), _breed(breed) {}
-
-<span class="hljs-keyword">public</span>:
-    <span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-title">GetWeapon</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>{ 
-        <span class="hljs-keyword">return</span> _breed.<span class="hljs-built_in">GetWeapon</span>(); 
-    }
-
-    <span class="hljs-comment">//... lots of other methods</span>
 };
 </code></pre>
 </div></div>
@@ -566,20 +566,6 @@
 <h1 id="prototype">Prototype</h1>
 <p>We add a clone function to the <code>Monster</code> and use that in the <code>Spawner</code>:</p>
 <div class="columns"><div>
-<pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Spawner</span> <span class="hljs-keyword">final</span>
-{
-    Monster* _prototype;
-<span class="hljs-keyword">public</span>:
-    <span class="hljs-built_in">Spawner</span>(Monster* prototype) : 
-        _prototype(prototype) {}
-
-    <span class="hljs-function">Monster* <span class="hljs-title">SpawnMonster</span><span class="hljs-params">()</span>
-    </span>{
-        <span class="hljs-keyword">return</span> _prototype-&gt;<span class="hljs-built_in">Clone</span>();
-    }
-};
-</code></pre>
-</div><div>
 <pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Monster</span>
 {
     <span class="hljs-keyword">friend</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Breed</span>;
@@ -602,6 +588,20 @@
     }
 
     <span class="hljs-comment">//... lots of other methods</span>
+};
+</code></pre>
+</div><div>
+<pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Spawner</span> <span class="hljs-keyword">final</span>
+{
+    Monster* _prototype;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">Spawner</span>(Monster* prototype) : 
+        _prototype(prototype) {}
+
+    <span class="hljs-function">Monster* <span class="hljs-title">SpawnMonster</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">return</span> _prototype-&gt;<span class="hljs-built_in">Clone</span>();
+    }
 };
 </code></pre>
 </div></div>
@@ -654,16 +654,6 @@
 <h1 id="composition-ftw">Composition FTW</h1>
 <p>Components? Perhaps, or:</p>
 <div class="columns"><div>
-<pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MonsterModel</span>
-{
-    Mesh _mesh;
-    Shader _shader;
-    Texture2D _albedo;
-    Texture2D _normal;
-    Color _albedoColor;
-}
-</code></pre>
-</div><div>
 <pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Monster</span>
 {
     <span class="hljs-type">int</span> _health;
@@ -679,6 +669,16 @@
 
     <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-title">GetWeapon</span><span class="hljs-params">()</span> </span>= <span class="hljs-number">0</span>;
 };
+</code></pre>
+</div><div>
+<pre><code class="language-cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MonsterModel</span>
+{
+    Mesh _mesh;
+    Shader _shader;
+    Texture2D _albedo;
+    Texture2D _normal;
+    Color _albedoColor;
+}
 </code></pre>
 </div></div>
 <p>One set of model data can now be used by all Monsters of the same type.</p>
