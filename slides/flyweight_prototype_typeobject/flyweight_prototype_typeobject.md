@@ -512,6 +512,26 @@ Instead of having a class for each new breed of monster, we say a monster **has 
 <div class="columns"><div>
 
 ```cpp
+class Monster
+{
+    int _health;
+    Breed& _breed;
+
+public:
+    Monster(Breed& breed) :
+    _health(breed.GetHealth()), _breed(breed) {}
+
+    const char* GetWeapon() const { 
+        return _breed.GetWeapon(); 
+    }
+
+    //... lots of other methods
+};
+```
+
+</div><div>
+
+```cpp
 class Breed
 {
     int _health;
@@ -530,26 +550,6 @@ public:
 };
 ```
 
-</div><div>
-
-```cpp
-class Monster
-{
-    int _health;
-    Breed& _breed;
-
-public:
-    Monster(Breed& breed) :
-    _health(breed.GetHealth()), _breed(breed) {}
-
-    const char* GetWeapon() const { 
-        return _breed.GetWeapon(); 
-    }
-
-    //... lots of other methods
-};
-```
-
 </div></div>
 
 <!-- Notice how these two classes cover all the previous code -->
@@ -561,6 +561,29 @@ public:
 Making type objects more like types: "constructors"
 
 <div class="columns"><div>
+
+```cpp
+class Monster
+{
+    friend class Breed;
+    int _health;
+    Breed& _breed;
+
+    Monster(Breed& breed) :
+    _health(breed.GetHealth()), _breed(breed) {}
+
+public:
+    const char* GetWeapon() const { 
+        return _breed.GetWeapon(); 
+    }
+
+    //... lots of other methods
+};
+```
+
+
+
+</div><div>
 
 ```cpp
 class Breed
@@ -582,27 +605,6 @@ public:
     const char* GetWeapon() const { 
         return _weapon; 
     }
-};
-```
-
-</div><div>
-
-```cpp
-class Monster
-{
-    friend class Breed;
-    int _health;
-    Breed& _breed;
-
-    Monster(Breed& breed) :
-    _health(breed.GetHealth()), _breed(breed) {}
-
-public:
-    const char* GetWeapon() const { 
-        return _breed.GetWeapon(); 
-    }
-
-    //... lots of other methods
 };
 ```
 
@@ -677,23 +679,6 @@ We add a clone function to the ``Monster`` and use that in the ``Spawner``:
 <div class="columns"><div>
 
 ```cpp
-class Spawner final
-{
-    Monster* _prototype;
-public:
-    Spawner(Monster* prototype) : 
-        _prototype(prototype) {}
-
-    Monster* SpawnMonster()
-    {
-        return _prototype->Clone();
-    }
-};
-```
-
-</div><div>
-
-```cpp
 class Monster
 {
     friend class Breed;
@@ -716,6 +701,23 @@ public:
     }
 
     //... lots of other methods
+};
+```
+
+</div><div>
+
+```cpp
+class Spawner final
+{
+    Monster* _prototype;
+public:
+    Spawner(Monster* prototype) : 
+        _prototype(prototype) {}
+
+    Monster* SpawnMonster()
+    {
+        return _prototype->Clone();
+    }
 };
 ```
 
@@ -786,20 +788,6 @@ Components? Perhaps, or:
 <div class="columns"><div>
 
 ```cpp
-class MonsterModel
-{
-    Mesh _mesh;
-    Shader _shader;
-    Texture2D _albedo;
-    Texture2D _normal;
-    Color _albedoColor;
-}
-```
-
-</div><div>
-
-
-```cpp
 class Monster
 {
     int _health;
@@ -816,6 +804,22 @@ public:
     virtual const char* GetWeapon() = 0;
 };
 ```
+
+
+
+</div><div>
+
+```cpp
+class MonsterModel
+{
+    Mesh _mesh;
+    Shader _shader;
+    Texture2D _albedo;
+    Texture2D _normal;
+    Color _albedoColor;
+}
+```
+
 
 </div></div>
 
