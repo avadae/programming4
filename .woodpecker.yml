@@ -1,0 +1,64 @@
+when:
+  event:
+    - push
+    - pull_request
+  branch:
+    - main
+
+steps:
+  checkout:
+    image: alpine/git
+    commands:
+      - git submodule update --init --recursive
+
+  prepare:
+    image: alpine
+    commands:
+      - mkdir -p build/slides
+      - apk add --no-cache rsync
+      - rsync -r \
+          --include='*/' \
+          --include='*.jpg' \
+          --include='*.png' \
+          --include='*.svg' \
+          --include='*.gif' \
+          --include='*.mp4' \
+          --include='*.webp' \
+          --exclude='*' \
+          slides/ build/slides/
+
+  marp_html:
+    image: marpteam/marp-cli:v4.1.1
+    environment:
+      MARP_USER: root:root
+      PUPPETEER_TIMEOUT: "0"
+    commands:
+      - marp -c package.json --allow-local-files
+
+  marp_pdf:
+    image: marpteam/marp-cli:v4.1.1
+    environment:
+      MARP_USER: root:root
+      PUPPETEER_TIMEOUT: "0"
+    commands:
+      - marp -c package.json --pdf --allow-local-files --pdf-notes=false
+
+  deploy_pages:
+    image: alpine/git
+    when:
+      event: push
+      branch: main
+    environment:
+      GIT_AUTHOR_NAME: woodpecker
+      GIT_AUTHOR_EMAIL: ci@codeberg.org
+      GIT_COMMITTER_NAME: woodpecker
+      GIT_COMMITTER_EMAIL: ci@codeberg.org
+    commands:
+      - git fetch origin pages || true
+      - git checkout pages || git checkout --orphan pages
+      - rm -rf *
+      - cp -r build/slides/* .
+      - git add .
+      - git commit -m "Deploy slides"
+      - git push origin pages --force
+
