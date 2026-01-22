@@ -1,22 +1,22 @@
 ---
 marp: true
 theme: dae
-title: Scenegraph & Dirty flag
+title: Scene Graph & Dirty Flag
 author: ava
 ---
 <!-- _class: title-slide-v2023 -->
 
-# Scenegraph & Dirty flag
+# Scene Graph & Dirty Flag
 
 <!-- footer: Programming 4 -->
 
 ---
-<!-- header: Scenegraph -->
+<!-- header: Scene Graph -->
 <!-- paginate: true -->
 
 # Components and their owner
 
-We saw this a lot... what's wrong with this? (4 things at least)
+We saw this a lot... What's wrong with this? (4 things at least)
 
 ```cpp
 class GameObject;
@@ -107,7 +107,7 @@ No: other components might still reference that component assuming they're shari
 
 # Components and their owner
 
-Better
+Improved implementation
 
 ```cpp
 class GameObject;
@@ -139,6 +139,7 @@ Well known in engines and 3D modelling software
 
 Hierarchical structure of objects in the scene
 
+A scene graph describes spatial relationships, not how data is stored or processed.
 
 ---
 
@@ -368,7 +369,7 @@ Set the parent to nullptr to remove the child from its parent.
 
 ---
 
-<!-- header: Game programming patterns - Dirty flag -->
+<!-- header: Game programming patterns - Dirty Flag -->
 
 # SetParent
 
@@ -398,7 +399,7 @@ Adding a game object to a parent means either:
 - The position in local space changes
 - The position in global space changes
 
-When the position of a parent changes, the position of the children change too (in world space).
+When the position of the parent changes, the position of its children change too, in world space. The children's position does not change in local space.
 - When do we calculate the world space transform? Immediately when moving the parent?
 
 ---
@@ -415,9 +416,9 @@ Adding a game object to a parent means either:
 - The position in local space changes
 - The position in global space changes
 
-When the position of a parent changes, the position of the children change too (in world space).
-- When do we calculate the world space transform? Immediately when moving the parent?
-- Better: only when we need it.
+When the position of the parent changes, the position of its children change too, in world space. The children's position does not change in local space.
+- When do we calculate the world space transform? ~~Immediately when moving the parent?~~
+- Better: **only when we need it**.
 
 ---
 
@@ -440,7 +441,7 @@ Where will this be executed?
 
 --- 
 
-# Dirty flag
+# Dirty Flag
 
 “A set of **primary data** changes over time. A set of **derived data** is determined from this using some **expensive process**. A **“dirty” flag** tracks when the derived data is out of sync with the primary data. It is **set when the primary data changes**. If the flag is set when the derived data is needed, then **it is reprocessed and the flag is cleared**. Otherwise, the previous **cached derived data** is used.”
 
@@ -448,7 +449,7 @@ What is primary and derived in our context?
 
 --- 
 
-# Dirty flag
+# Dirty Flag
 
 “A set of **primary data** changes over time. A set of **derived data** is determined from this using some **expensive process**. A **“dirty” flag** tracks when the derived data is out of sync with the primary data. It is **set when the primary data changes**. If the flag is set when the derived data is needed, then **it is reprocessed and the flag is cleared**. Otherwise, the previous **cached derived data** is used.”
 
@@ -462,7 +463,7 @@ What other example have you seen in Minigin?
 
 ---
 
-# Dirty flag
+# Dirty Flag
 
 ```cpp
 void SetParent(GameObject* parent, bool keepWorldPosition)
@@ -491,7 +492,7 @@ void SetLocalPosition(const glm::vec3& pos)
 
 ---
 
-# Dirty flag
+# Dirty Flag
 
 ```cpp
 const glm::vec3& GetWorldPosition()
@@ -527,11 +528,15 @@ void UpdateWorldPosition()
 
 **When is the flag cleared?**
 - When the result is needed (as in the example)
-- At well-defined checkpoints
-- In the background
+- Or at well-defined checkpoints
+- Or in the background
+
+**When are we considered dirty?**
+- A value has changed
+- Or something we depend on has changed (like a parent)
 
 ---
 
-# Find the dirty flag
+# Find the Dirty Flag
 
 ![center width:1200 drop-shadow:0,0,10px,#000](dirtyflag_vs.jpg)

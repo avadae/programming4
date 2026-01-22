@@ -1,12 +1,12 @@
 ---
 marp: true
 theme: dae
-title: Gameloop, Update method & Component
+title: Game Loop, Update method & Component
 author: ava
 ---
 <!-- _class: title-slide-v2023 -->
 
-# Gameloop, Update method & Component
+# Game Loop, Update Method & Component
 
 ---
 <!-- header: Software design patterns -->
@@ -16,19 +16,19 @@ author: ava
 
 Software design patterns are **blueprints** of **possible** solutions to **common** problems
 
-They are hints to how you can solve a particular problem
+- They are hints to how you can solve a particular problem
 
-They're only that, they're no law
+- They're only that, they're not law
 
-Different contexts call for different solutions
+- Different contexts call for different solutions
 
-Language agnostic
+- Language agnostic
 
 <!-- footer: Programming 4 -->
 
 ---
 
-# Gang of four
+# Gang of Four
 
 ![center w:700 drop-shadow:0,0,10px,#000](designpatterns_cover.jpg)
 
@@ -54,7 +54,7 @@ Language agnostic
 
 <!-- header: Game programming patterns - Game loop -->
 
-# Game loop
+# Game Loop
 
 ```cpp
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -83,11 +83,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 }
 ```
 
-<!-- default windows c++ desktop application looks like this -->
+<!-- default windows C++ desktop application looks like this -->
 
 ---
 
-# Game loop
+# Game Loop
 
 Probably the simplest or most obvious pattern there is, yet it's tricky to get it right.
 
@@ -109,7 +109,7 @@ We need to exit somehow
 
 ---
 
-# Game loop
+# Game Loop
 
 Indeed we need to exit somehow:
 
@@ -138,7 +138,7 @@ while(do_continue)
 }
 ```
 
-Via emscripten we can compile our c++ programs to webassembly. We can't maintain our infinite loop however, we need to provide a callback:
+Via emscripten we can compile our C++ programs to webassembly. We can't maintain our infinite loop however, we need to provide a callback:
 
 ```cpp
 void RunOneFrame()
@@ -326,7 +326,7 @@ void scene::update()
 
 ---
 
-# Update method
+# Update Method
 
 <div class="columns"><div>
 
@@ -372,7 +372,7 @@ The state pattern comes into view here
 
 ---
 
-# Update method
+# Update Method
 
 That is one of the advantages of coroutines in Unity
 
@@ -495,13 +495,13 @@ private IEnumerator DoPatrol()
 ```
 
 Advantage? You can use it in other places than the Update method as well (as in the above example).
-<sub>Note: I wrote singleton with a lower case s</sub>
+<sub>Note: I wrote singleton with a lowercase s</sub>
 
 <!--Ideal moment for a break here.-->
 
 --- 
 
-# Update method
+# Update Method
 
 On what objects do we call this Update method?
 
