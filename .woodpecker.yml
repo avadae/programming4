@@ -6,10 +6,6 @@ when:
     - main
 
 steps:
-  checkout:
-    image: woodpecker/git
-    pull: true
-
   prepare:
     image: alpine
     commands:
