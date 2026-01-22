@@ -9,18 +9,19 @@ steps:
   prepare:
     image: alpine
     commands:
-      - mkdir -p ./build/slides
+      - mkdir -p build/slides
       - apk add --no-cache rsync
-      - rsync -av -r \
-          --include='*/' \
-          --include='*.jpg' \
-          --include='*.png' \
-          --include='*.svg' \
-          --include='*.gif' \
-          --include='*.mp4' \
-          --include='*.webp' \
-          --exclude='*' \
-          ./workspace/slides/ ./workspace/build/slides/
+      - >
+        rsync -av -r
+        --include='*/'
+        --include='*.jpg'
+        --include='*.png'
+        --include='*.svg'
+        --include='*.gif'
+        --include='*.mp4'
+        --include='*.webp'
+        --exclude='*'
+        slides/ build/slides/
 
   marp_html:
     image: marpteam/marp-cli:v4.1.1
