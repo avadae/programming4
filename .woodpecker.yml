@@ -41,20 +41,24 @@ steps:
 
   deploy_pages:
     image: alpine/git
-    when:
-      event: push
-      branch: main
     environment:
-      GIT_AUTHOR_NAME: woodpecker
-      GIT_AUTHOR_EMAIL: ci@codeberg.org
-      GIT_COMMITTER_NAME: woodpecker
-      GIT_COMMITTER_EMAIL: ci@codeberg.org
+      CODEBERG_TOKEN:
+        from_secret: woodpecker_token
     commands:
-      - git fetch origin pages || true
-      - git checkout pages || git checkout --orphan pages
-      - rm -rf *
-      - cp -r build/slides/* .
-      - git add .
-      - git commit -m "Deploy slides"
-      - git push origin pages --force
+      - git config --global user.name "woodpecker"
+      - git config --global user.email "ci@codeberg.org"
 
+      - git clone -b pages https://$CODEBERG_TOKEN@codeberg.org/$CI_REPO.git deploy_dir || (mkdir deploy_dir && cd deploy_dir && git init && git checkout -b pages && cd ..)
+
+      - rm -rf deploy_dir/*
+      - cp -r build/slides/* deploy_dir/
+
+      - cd deploy_dir
+      - git add .
+      - |
+        if [ -n "$(git status --porcelain)" ]; then
+          git commit -m "Deploy slides: ${CI_COMMIT_SHA:0:7}"
+          git push https://$CODEBERG_TOKEN@codeberg.org/$CI_REPO.git pages
+        else
+          echo "No changes to deploy."
+        fi
