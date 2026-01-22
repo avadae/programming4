@@ -66,7 +66,7 @@ You need to keep track of the height when you jumped, you compare it with the he
 <!-- header: Observer -->
 # Observer
 
-Notify interested parties that a certain event took place. They have to decide what to do with that. 
+Notify interested parties that a certain event took place. They decide what to do with the event.
 
 In our example we notify interested parties that a certain actor in the game died:
 
@@ -300,7 +300,7 @@ bool dae::InputManager::ProcessInput()
 **Event Queue** also decouples the receiver from the sender
 - Sender does not know who’s listening
 - Receiver does not need to know who issued the event/message
-- Receiver doesn't have to handle the message/request immediatly
+- Receiver doesn't have to handle the message/request immediately
 
 Unsurprisingly, this works with a queue
 - (ideally implemented as a ring buffer)
@@ -429,12 +429,12 @@ void dae::Ghost::HandleEvent(const Event* pEvent) {
 -->
 
 --- 
-# Event Id
+# Event ID
 
 <div class="columns"><div>
 
 An event has two parts
-- Type (or Name, or Id)
+- Type (or Name, or ID)
 - Arguments
 
 “EventId” like this? What are the pros and cons?
@@ -469,12 +469,12 @@ if(e.id == "PlayerDied") {
 
 ---
 
-# Event Id
+# Event ID
 
 <div class="columns"><div>
 
 An event has two parts
-- Type (or Name, or Id)
+- Type (or Name, or ID)
 - Arguments
 
 “EventId” like this? What are the pros and cons?
@@ -519,12 +519,12 @@ no scoped enums :)
 
 ---
 
-# Event Id
+# Event ID
 
 <div class="columns"><div>
 
 An event has two parts
-- Type (or Name, or Id)
+- Type (or Name, or ID)
 - Arguments
 
 “EventId” like this? What are the pros and cons?
@@ -566,10 +566,10 @@ if(e.id == EventId::PLAYER_DIED) {
 
 --- 
 
-# Event Id
+# Event ID
 
 - With strings
-  - Id's don't need to be known in advance :smile:
+  - ID's don't need to be known in advance :smile:
   - String comparisons :sob:
 - With a **scoped** enum 
   - Fast comparison/indexing :smile:
@@ -582,7 +582,7 @@ Any other options?
 
 ---
 
-# Event Id
+# Event ID
 
 We could make use of an SDBM hash
 
@@ -600,7 +600,7 @@ unsigned int sdbm_hash(const char *str) {
 ```
 This function generates a simple (non-secure) hash of a given string in O(n) time.
 
-Instead of EventId as a string or an enum we simply use an unsigned int and we generate id's with text:
+Instead of EventId as a string or an enum we simply use an unsigned int and we generate ID's with text:
 
 ```cpp
 Event e(sdbm_hash("PlayerDied"));
@@ -616,7 +616,7 @@ Downside is that this needs to be calculated at runtime.
 
 ---
 
-# Event Id
+# Event ID
 
 ```cpp
 template <int length> struct sdbm_hash 
@@ -651,7 +651,7 @@ The last method I've added myself: In C++, string literals like "QuitEvent" are 
 
 ---
 
-# Event Id
+# Event ID
 
 And now we can write:
 
