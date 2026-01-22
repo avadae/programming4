@@ -10,17 +10,17 @@ The slides are not organised in weeks, since the order in which we discuss the p
 
 ### Game Programming Patterns
 
-- [Gameloop, Update method and Component](https://avadae.github.io/programming4/gameloop_updatemethod_component/gameloop_updatemethod_component.html)
-- [Scenegraph and Dirty flag](https://avadae.github.io/programming4/scenegraph_dirtyflag/scenegraph_dirtyflag.html)
-- [Command and Pimpl](https://avadae.github.io/programming4/command_pimpl/command_pimpl.html)
-- [Observer and Event queue](https://avadae.github.io/programming4/observer_eventqueue/observer_eventqueue.html)
-- [State and Double buffer](https://avadae.github.io/programming4/state_doublebuffer/state_doublebuffer.html)
-- [Byte code](https://avadae.github.io/programming4/bytecode/bytecode.html)
-- [Singleton and Service locators](https://avadae.github.io/programming4/sound_services/sound_services.html)
-- [Flyweight, Prototype and Type Objects](https://avadae.github.io/programming4/flyweight_prototype_typeobject/flyweight_prototype_typeobject.html)
+- [Gameloop, Update method and Component](https://avadev.codeberg.page/programming4/gameloop_updatemethod_component/gameloop_updatemethod_component.html)
+- [Scenegraph and Dirty flag](https://avadev.codeberg.page/programming4/scenegraph_dirtyflag/scenegraph_dirtyflag.html)
+- [Command and Pimpl](https://avadev.codeberg.page/programming4/command_pimpl/command_pimpl.html)
+- [Observer and Event queue](https://avadev.codeberg.page/programming4/observer_eventqueue/observer_eventqueue.html)
+- [State and Double buffer](https://avadev.codeberg.page/programming4/state_doublebuffer/state_doublebuffer.html)
+- [Byte code](https://avadev.codeberg.page/programming4/bytecode/bytecode.html)
+- [Singleton and Service locators](https://avadev.codeberg.page/programming4/sound_services/sound_services.html)
+- [Flyweight, Prototype and Type Objects](https://avadev.codeberg.page/programming4/flyweight_prototype_typeobject/flyweight_prototype_typeobject.html)
 
 ### Memory
 
-- [Memory and Data Locality](https://avadae.github.io/programming4/thrashthecache/thrashthecache.html)
-- [Memory management and Object pool](https://avadae.github.io/programming4/memorymanagement/memorymanagement.html)
+- [Memory and Data Locality](https://avadev.codeberg.page/programming4/thrashthecache/thrashthecache.html)
+- [Memory management and Object pool](https://avadev.codeberg.page/programming4/memorymanagement/memorymanagement.html)
 
