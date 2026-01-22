@@ -6,6 +6,13 @@ when:
     - main
 
 steps:
+  clone:
+    git:
+      image: woodpeckerci/plugin-git
+      settings:
+        depth: 0
+        lfs: false
+
   prepare:
     image: alpine
     commands:
