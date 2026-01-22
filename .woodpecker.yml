@@ -7,9 +7,8 @@ when:
 
 steps:
   checkout:
-    image: alpine/git
-    commands:
-      - git submodule update --init --recursive
+    image: woodpecker/git
+    pull: true
 
   prepare:
     image: alpine
