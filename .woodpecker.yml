@@ -29,7 +29,7 @@ steps:
       MARP_USER: root:root
       PUPPETEER_TIMEOUT: "0"
     commands:
-      - marp -c package.json --allow-local-files
+      - docker-entrypoint -c package.json --allow-local-files
 
   marp_pdf:
     image: marpteam/marp-cli:v4.1.1
@@ -37,7 +37,7 @@ steps:
       MARP_USER: root:root
       PUPPETEER_TIMEOUT: "0"
     commands:
-      - marp -c package.json --pdf --allow-local-files --pdf-notes=false
+      - docker-entrypoint -c package.json --pdf --allow-local-files --pdf-notes=false
 
   deploy_pages:
     image: alpine/git
